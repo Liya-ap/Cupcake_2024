@@ -1,0 +1,16 @@
+@startuml
+object Customer
+object Administrator
+object Cupcake
+object Order
+object OrderLine
+object Basket
+object System
+
+Customer o-- Order
+Order *-- OrderLine
+OrderLine *-- Cupcake
+Basket o-- OrderLine
+System *-- Administrator
+System o-- Customer
+@enduml
