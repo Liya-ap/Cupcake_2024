@@ -43,15 +43,6 @@ public class Order {
         this.orderDetails = orderDetails;
     }
 
-    /*public double calculateTotalPrice (){
-        double totalPrice = 0;
-
-        for (OrderDetails orderDetails : orderDetails){
-            totalPrice += orderDetails.getPriceEach() * orderDetails.getAmount();
-        }
-        return totalPrice;
-    }*/
-
 }
 
 
