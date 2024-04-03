@@ -1,10 +1,29 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<title>Login Page</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="../public/css/loginstyle.css" th:href="@{/css/loginstyle.css}" rel="loginstylesheet"/>
 </head>
+
 <body>
+<header>
+    <a href="/login.html" th:href="@{/}">
+        <img src="../public/images/cupcakelogo.png" th:src="@{/images/cupcakelogo.png}" width="35%"/>
+    </a>
+</header>
+
+<p>Please login:</p>
+
+<form method="POST">
+    <input type="text" name="username" placeholder="Enter your username"/>
+    <input type="password" name="password" placeholder="Enter your password"/>
+    <button type="submit" formaction="/login">Login</button>
+    <div><p th:text="${message}"></p></div>
+</form>
+
+<p> <a href="createuser.html" th:href="@{/createuser}">Create user</a> </p>
 
 </body>
 </html>
