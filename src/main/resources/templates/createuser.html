@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 
-<title>Login Page</title>
+<title>Create User</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link href="../public/css/loginstyle.css" th:href="@{/css/loginstyle.css}" rel="loginstylesheet"/>
@@ -14,16 +14,15 @@
     </a>
 </header>
 
-<p>Please login:</p>
+<p>Create user:</p>
 
 <form method="POST">
     <input type="text" name="username" placeholder="Enter your username"/>
-    <input type="password" name="password" placeholder="Enter your password"/>
-    <button type="submit" formaction="/login">Login</button>
+    <input type="password" name="password1" placeholder="Enter your password"/>
+    <input type="password" name="password2" placeholder="Enter your password again"/>
+    <button type="submit" formaction="/createuser">Create user</button>
     <div><p th:text="${message}"></p></div>
 </form>
-
-<p> <a href="createuser.html" th:href="@{/createuser}">Create user</a> </p>
 
 </body>
 </html>
