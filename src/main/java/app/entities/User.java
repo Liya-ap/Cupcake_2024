@@ -2,14 +2,14 @@ package app.entities;
 
 public class User {
     private int userId;
-    private String username;
+    private String email;
     private String password;
     private String role;
     private int balance;
 
-    public User(int userId, String username, String password, String role, int balance) {
+    public User(int userId, String email, String password, String role, int balance) {
         this.userId = userId;
-        this.username = username;
+        this.email = email;
         this.password = password;
         this.role = role;
         this.balance = balance;
@@ -23,12 +23,12 @@ public class User {
         this.userId = userId;
     }
 
-    public String getUsername() {
-        return username;
+    public String getEmail() {
+        return email;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getPassword() {
@@ -59,7 +59,7 @@ public class User {
     public String toString() {
         return "User{" +
                 "userId=" + userId +
-                ", username='" + username + '\'' +
+                ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
                 ", role='" + role + '\'' +
                 ", balance=" + balance +

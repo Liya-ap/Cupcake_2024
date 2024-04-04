@@ -8,53 +8,77 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Arizonia"/>
 </head>
 <body>
-    <header>
-        <h1 style="font-family: 'Arizonia', sans-serif; background: url('/images/cupcakelogo.png') center no-repeat;">
-            Olsker Cupcakes
-        </h1>
-        <div class="menu-section">
-            <nav>
-                <div class="left-side">
-                    <a class="menu-chosen" href=""><i class="fa fa-home" style="padding-right: 10px"></i>Home</a>
-                    <a href=""><i class="fa fa-list-ul" style="padding-right: 10px"></i>My Orders</a>
-                    <a href=""><i class="fa fa-users" style="padding-right: 10px"></i>Customers</a>
-                </div>
-                <div class="right-side">
-                    <a class="basket" href="/templates/basket.html" th:href="@{/basket}">
-                        <i class="fa" style="font-size:50px;">&#xf07a;</i>
-                        <span class='badge' id='lblCartCount' th:text="${amountInBasket}">0</span>
-                    </a>
-                </div>
-            </nav>
-        </div>
-    </header>
+<header>
+    <h1 style="font-family: 'Arizonia', sans-serif; background: url('/images/cupcakelogo.png') center no-repeat;">
+        Olsker Cupcakes
+    </h1>
+    <div class="menu-section">
+        <nav>
+            <div class="left-side">
+                <a class="menu-chosen" href="/frontpage"><i class="fa fa-home" style="padding-right: 10px"></i>Home</a>
+                <a href=""><i class="fa fa-list-ul" style="padding-right: 10px"></i>
+                    <span th:if="${#ctx.session.currentUser.role == 'user'}">My Orders</span>
+                    <span th:if="${#ctx.session.currentUser.role == 'admin'}">All Orders</span>
+                </a>
+                <span th:if="${#ctx.session.currentUser.role == 'admin'}"><a href=""><i class="fa fa-users"
+                                                                                        style="padding-right: 10px"></i>Customers</a></span>
+            </div>
+            <div class="right-side">
+                    <span th:if="${#ctx.session.currentUser.role == 'user'}">
+                        <a class="basket" href="/templates/basket.html" th:href="@{/basket}">
+                            <i class="fa" style="font-size:50px;">&#xf07a;</i>
+                            <span class='badge' id='lblCartCount' th:text="${amountInBasket}">0</span>
+                        </a>
+                    </span>
+            </div>
+        </nav>
+    </div>
+</header>
 
-    <div class="content-section">
-        <img src="/public/images/frontpage-bg-img.jpg" alt="Delicious Cupcakes" th:src="@{/images/frontpage-bg-img.jpg}">
-        <div class="choose-cupcake-container">
+<div class="content-section">
+    <img src="/public/images/frontpage-bg-img.jpg" alt="Delicious Cupcakes" th:src="@{/images/frontpage-bg-img.jpg}">
+
+    <th:block th:if="${#ctx.session.currentUser.role == 'admin'}">
+        <div class="content-display-container">
+            <div class="outer-border">
+                <div class="inner-border" style="background-color: #dadada"><h4>Welcome Admin!</h4></div>
+            </div>
+        </div>
+        <div class="footer">
+            <div>
+                <a class="log-out" href="/logout"><i class="fa fa-sign-out" style="padding-left: 10px">Log Out</i></a>
+            </div>
+        </div>
+    </th:block>
+
+    <th:block th:if="${#ctx.session.currentUser.role == 'user'}">
+        <div class="content-display-container">
             <div class="outer-border">
                 <div class="inner-border">
                     <h3>Order Your Cupcakes Here:</h3>
-                    <form th:object="${cupcakeobj}" th:action="@{/addCupcake}" method="POST">
+                    <form th:action="@{/addCupcake}" method="POST">
                         <div class="option-container">
                             <div class="option-single">
                                 <label for="bottom">Bottom Flavor:</label>
-                                <select id="bottom" th:field="*{topping}" name="bottomFlavor">
+                                <select id="bottom" name="bottomFlavor">
                                     <option disabled selected>Pick flavor</option>
-                                    <option th:each="bottomFlavor: ${allBottomFlavors}" th:value="${bottomFlavor.flavor}" th:text="${bottomFlavor.flavor}"></option>
+                                    <option th:each="bottomFlavor: ${allBottomFlavors}"
+                                            th:value="${bottomFlavor.flavor}" th:text="${bottomFlavor.flavor}"></option>
                                 </select>
                             </div>
                             <div class="option-single">
                                 <label for="topping">Topping Flavor:</label>
-                                <select id="topping" th:field="*{bottom}" name="toppingFlavor">
+                                <select id="topping" name="toppingFlavor">
                                     <option disabled selected>Pick flavor</option>
-                                    <option th:each="toppingFlavor: ${allToppingFlavors}" th:value="${toppingFlavor.flavor}" th:text="${toppingFlavor.flavor}"></option>
+                                    <option th:each="toppingFlavor: ${allToppingFlavors}"
+                                            th:value="${toppingFlavor.flavor}"
+                                            th:text="${toppingFlavor.flavor}"></option>
                                 </select>
                             </div>
 
                             <div class="option-single">
                                 <label for="amount">Quantity:</label>
-                                <select  id="amount" th:field="*{amount}" name="amount">
+                                <select id="amount" name="amount">
                                     <option disabled selected>0</option>
                                     <option th:each="i : ${#numbers.sequence(1, 10)}" th:value="${i}" th:text="${i}">
                                 </select>
@@ -62,7 +86,10 @@
 
                         </div>
                         <div class="add-cupcake-container">
-                            <p th:if="${nullFields}"><i class="fa fa-exclamation-circle" th:text="${' '+nullFields}"></i></p>
+                            <p class="fail" th:if="${fail}"><i class="fa fa-exclamation-circle"
+                                                               th:text="${' '+fail}"></i></p>
+                            <p class="success" th:if="${success}"><i class="fa fa-check-circle"
+                                                                     th:text="${' '+success}"></i></p>
                             <button class="add-button" type="submit">Add to basket</button>
                         </div>
                     </form>
@@ -71,13 +98,13 @@
         </div>
         <div class="footer">
             <div class="left-side">
-                <h2>Logged in with: <span class="email">orniliyaanantaphakpetersenhhhhhhhhhhhhhh@gmail.com</span></h2>
+                <h2>Logged in with: <span class="email" th:text="${currentUserEmail}"></span></h2>
             </div>
             <div class="right-side">
-                <!-- MISSING: log out session user-->
-                <a class="log-out" href=""><i class="fa fa-sign-out" style="padding-left: 10px">Log Out</i></a>
+                <a class="log-out" href="/logout"><i class="fa fa-sign-out" style="padding-left: 10px">Log Out</i></a>
             </div>
         </div>
-    </div>
+    </th:block>
+</div>
 </body>
 </html>
