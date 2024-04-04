@@ -5,7 +5,7 @@
 -- Dumped from database version 16.2 (Debian 16.2-1.pgdg120+2)
 -- Dumped by pg_dump version 16.1
 
--- Started on 2024-04-03 13:49:41 UTC
+-- Started on 2024-04-04 14:58:11 UTC
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -16,7 +16,7 @@ SELECT pg_catalog.set_config('search_path', '', false);
 SET check_function_bodies = false;
 SET xmloption = content;
 SET client_min_messages = warning;
-SET row_security = on;
+SET row_security = off;
 
 ALTER TABLE IF EXISTS ONLY public."order" DROP CONSTRAINT IF EXISTS foreignkey_user_id;
 ALTER TABLE IF EXISTS ONLY public.cupcakedetail DROP CONSTRAINT IF EXISTS foreignkey_topping;
@@ -54,10 +54,12 @@ DROP TABLE IF EXISTS public.bottom;
 DROP SEQUENCE IF EXISTS public.basket_basket_id_seq;
 DROP TABLE IF EXISTS public.basket;
 DROP SCHEMA IF EXISTS public;
+
 --
--- TOC entry 5 (class 2615 OID 40961)
+-- TOC entry 5 (class 2615 OID 41330)
 -- Name: public; Type: SCHEMA; Schema: -; Owner: pg_database_owner
 --
+
 DROP SCHEMA IF EXISTS public;
 CREATE SCHEMA public;
 
@@ -78,7 +80,7 @@ SET default_tablespace = '';
 SET default_table_access_method = heap;
 
 --
--- TOC entry 227 (class 1259 OID 41036)
+-- TOC entry 215 (class 1259 OID 41331)
 -- Name: basket; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -92,7 +94,7 @@ CREATE TABLE public.basket (
 ALTER TABLE public.basket OWNER TO postgres;
 
 --
--- TOC entry 226 (class 1259 OID 41035)
+-- TOC entry 216 (class 1259 OID 41334)
 -- Name: basket_basket_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -108,7 +110,7 @@ ALTER SEQUENCE public.basket_basket_id_seq OWNER TO postgres;
 
 --
 -- TOC entry 3428 (class 0 OID 0)
--- Dependencies: 226
+-- Dependencies: 216
 -- Name: basket_basket_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
@@ -116,7 +118,7 @@ ALTER SEQUENCE public.basket_basket_id_seq OWNED BY public.basket.basket_id;
 
 
 --
--- TOC entry 215 (class 1259 OID 40962)
+-- TOC entry 217 (class 1259 OID 41335)
 -- Name: bottom; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -130,7 +132,7 @@ CREATE TABLE public.bottom (
 ALTER TABLE public.bottom OWNER TO postgres;
 
 --
--- TOC entry 216 (class 1259 OID 40965)
+-- TOC entry 218 (class 1259 OID 41338)
 -- Name: bottom_bottom_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -146,7 +148,7 @@ ALTER SEQUENCE public.bottom_bottom_id_seq OWNER TO postgres;
 
 --
 -- TOC entry 3429 (class 0 OID 0)
--- Dependencies: 216
+-- Dependencies: 218
 -- Name: bottom_bottom_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
@@ -154,7 +156,7 @@ ALTER SEQUENCE public.bottom_bottom_id_seq OWNED BY public.bottom.bottom_id;
 
 
 --
--- TOC entry 219 (class 1259 OID 40970)
+-- TOC entry 219 (class 1259 OID 41339)
 -- Name: cupcakedetail; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -170,7 +172,7 @@ CREATE TABLE public.cupcakedetail (
 ALTER TABLE public.cupcakedetail OWNER TO postgres;
 
 --
--- TOC entry 217 (class 1259 OID 40966)
+-- TOC entry 220 (class 1259 OID 41342)
 -- Name: order; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -183,7 +185,7 @@ CREATE TABLE public."order" (
 ALTER TABLE public."order" OWNER TO postgres;
 
 --
--- TOC entry 218 (class 1259 OID 40969)
+-- TOC entry 221 (class 1259 OID 41345)
 -- Name: order_order_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -199,7 +201,7 @@ ALTER SEQUENCE public.order_order_id_seq OWNER TO postgres;
 
 --
 -- TOC entry 3430 (class 0 OID 0)
--- Dependencies: 218
+-- Dependencies: 221
 -- Name: order_order_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
@@ -207,7 +209,7 @@ ALTER SEQUENCE public.order_order_id_seq OWNED BY public."order".order_id;
 
 
 --
--- TOC entry 220 (class 1259 OID 40973)
+-- TOC entry 222 (class 1259 OID 41346)
 -- Name: orderdetail_orderdetail_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -223,7 +225,7 @@ ALTER SEQUENCE public.orderdetail_orderdetail_id_seq OWNER TO postgres;
 
 --
 -- TOC entry 3431 (class 0 OID 0)
--- Dependencies: 220
+-- Dependencies: 222
 -- Name: orderdetail_orderdetail_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
@@ -231,7 +233,7 @@ ALTER SEQUENCE public.orderdetail_orderdetail_id_seq OWNED BY public.cupcakedeta
 
 
 --
--- TOC entry 221 (class 1259 OID 40974)
+-- TOC entry 223 (class 1259 OID 41347)
 -- Name: orderline; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -244,7 +246,7 @@ CREATE TABLE public.orderline (
 ALTER TABLE public.orderline OWNER TO postgres;
 
 --
--- TOC entry 222 (class 1259 OID 40977)
+-- TOC entry 224 (class 1259 OID 41350)
 -- Name: topping; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -258,7 +260,7 @@ CREATE TABLE public.topping (
 ALTER TABLE public.topping OWNER TO postgres;
 
 --
--- TOC entry 223 (class 1259 OID 40982)
+-- TOC entry 225 (class 1259 OID 41355)
 -- Name: topping_topping_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -274,7 +276,7 @@ ALTER SEQUENCE public.topping_topping_id_seq OWNER TO postgres;
 
 --
 -- TOC entry 3432 (class 0 OID 0)
--- Dependencies: 223
+-- Dependencies: 225
 -- Name: topping_topping_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
@@ -282,7 +284,7 @@ ALTER SEQUENCE public.topping_topping_id_seq OWNED BY public.topping.topping_id;
 
 
 --
--- TOC entry 224 (class 1259 OID 40983)
+-- TOC entry 226 (class 1259 OID 41356)
 -- Name: users; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -298,7 +300,7 @@ CREATE TABLE public.users (
 ALTER TABLE public.users OWNER TO postgres;
 
 --
--- TOC entry 225 (class 1259 OID 40988)
+-- TOC entry 227 (class 1259 OID 41361)
 -- Name: users_user_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -314,7 +316,7 @@ ALTER SEQUENCE public.users_user_id_seq OWNER TO postgres;
 
 --
 -- TOC entry 3433 (class 0 OID 0)
--- Dependencies: 225
+-- Dependencies: 227
 -- Name: users_user_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
@@ -322,7 +324,7 @@ ALTER SEQUENCE public.users_user_id_seq OWNED BY public.users.user_id;
 
 
 --
--- TOC entry 3239 (class 2604 OID 41039)
+-- TOC entry 3232 (class 2604 OID 41362)
 -- Name: basket basket_id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -330,7 +332,7 @@ ALTER TABLE ONLY public.basket ALTER COLUMN basket_id SET DEFAULT nextval('publi
 
 
 --
--- TOC entry 3232 (class 2604 OID 40989)
+-- TOC entry 3233 (class 2604 OID 41363)
 -- Name: bottom bottom_id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -338,7 +340,7 @@ ALTER TABLE ONLY public.bottom ALTER COLUMN bottom_id SET DEFAULT nextval('publi
 
 
 --
--- TOC entry 3234 (class 2604 OID 40991)
+-- TOC entry 3234 (class 2604 OID 41364)
 -- Name: cupcakedetail cupcakedetail_id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -346,7 +348,7 @@ ALTER TABLE ONLY public.cupcakedetail ALTER COLUMN cupcakedetail_id SET DEFAULT 
 
 
 --
--- TOC entry 3233 (class 2604 OID 40990)
+-- TOC entry 3235 (class 2604 OID 41365)
 -- Name: order order_id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -354,7 +356,7 @@ ALTER TABLE ONLY public."order" ALTER COLUMN order_id SET DEFAULT nextval('publi
 
 
 --
--- TOC entry 3235 (class 2604 OID 40992)
+-- TOC entry 3236 (class 2604 OID 41366)
 -- Name: topping topping_id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -362,7 +364,7 @@ ALTER TABLE ONLY public.topping ALTER COLUMN topping_id SET DEFAULT nextval('pub
 
 
 --
--- TOC entry 3236 (class 2604 OID 40993)
+-- TOC entry 3237 (class 2604 OID 41367)
 -- Name: users user_id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -370,16 +372,16 @@ ALTER TABLE ONLY public.users ALTER COLUMN user_id SET DEFAULT nextval('public.u
 
 
 --
--- TOC entry 3420 (class 0 OID 41036)
--- Dependencies: 227
+-- TOC entry 3408 (class 0 OID 41331)
+-- Dependencies: 215
 -- Data for Name: basket; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
 
 
 --
--- TOC entry 3408 (class 0 OID 40962)
--- Dependencies: 215
+-- TOC entry 3410 (class 0 OID 41335)
+-- Dependencies: 217
 -- Data for Name: bottom; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -391,7 +393,7 @@ INSERT INTO public.bottom (bottom_id, flavor, price) VALUES (5, 'Almond', 7);
 
 
 --
--- TOC entry 3412 (class 0 OID 40970)
+-- TOC entry 3412 (class 0 OID 41339)
 -- Dependencies: 219
 -- Data for Name: cupcakedetail; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -399,24 +401,24 @@ INSERT INTO public.bottom (bottom_id, flavor, price) VALUES (5, 'Almond', 7);
 
 
 --
--- TOC entry 3410 (class 0 OID 40966)
--- Dependencies: 217
+-- TOC entry 3413 (class 0 OID 41342)
+-- Dependencies: 220
 -- Data for Name: order; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
 
 
 --
--- TOC entry 3414 (class 0 OID 40974)
--- Dependencies: 221
+-- TOC entry 3416 (class 0 OID 41347)
+-- Dependencies: 223
 -- Data for Name: orderline; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
 
 
 --
--- TOC entry 3415 (class 0 OID 40977)
--- Dependencies: 222
+-- TOC entry 3417 (class 0 OID 41350)
+-- Dependencies: 224
 -- Data for Name: topping; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -432,8 +434,8 @@ INSERT INTO public.topping (topping_id, flavor, price) VALUES (9, 'Blue cheese',
 
 
 --
--- TOC entry 3417 (class 0 OID 40983)
--- Dependencies: 224
+-- TOC entry 3419 (class 0 OID 41356)
+-- Dependencies: 226
 -- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -443,7 +445,7 @@ INSERT INTO public.users (user_id, email, password, role, balance_dkk) VALUES (2
 
 --
 -- TOC entry 3434 (class 0 OID 0)
--- Dependencies: 226
+-- Dependencies: 216
 -- Name: basket_basket_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
@@ -452,7 +454,7 @@ SELECT pg_catalog.setval('public.basket_basket_id_seq', 1, true);
 
 --
 -- TOC entry 3435 (class 0 OID 0)
--- Dependencies: 216
+-- Dependencies: 218
 -- Name: bottom_bottom_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
@@ -461,7 +463,7 @@ SELECT pg_catalog.setval('public.bottom_bottom_id_seq', 5, true);
 
 --
 -- TOC entry 3436 (class 0 OID 0)
--- Dependencies: 218
+-- Dependencies: 221
 -- Name: order_order_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
@@ -470,7 +472,7 @@ SELECT pg_catalog.setval('public.order_order_id_seq', 1, false);
 
 --
 -- TOC entry 3437 (class 0 OID 0)
--- Dependencies: 220
+-- Dependencies: 222
 -- Name: orderdetail_orderdetail_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
@@ -479,7 +481,7 @@ SELECT pg_catalog.setval('public.orderdetail_orderdetail_id_seq', 5, true);
 
 --
 -- TOC entry 3438 (class 0 OID 0)
--- Dependencies: 223
+-- Dependencies: 225
 -- Name: topping_topping_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
@@ -488,7 +490,7 @@ SELECT pg_catalog.setval('public.topping_topping_id_seq', 9, true);
 
 --
 -- TOC entry 3439 (class 0 OID 0)
--- Dependencies: 225
+-- Dependencies: 227
 -- Name: users_user_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
@@ -496,7 +498,7 @@ SELECT pg_catalog.setval('public.users_user_id_seq', 2, true);
 
 
 --
--- TOC entry 3257 (class 2606 OID 41043)
+-- TOC entry 3241 (class 2606 OID 41369)
 -- Name: basket basket_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -505,7 +507,7 @@ ALTER TABLE ONLY public.basket
 
 
 --
--- TOC entry 3241 (class 2606 OID 40995)
+-- TOC entry 3243 (class 2606 OID 41371)
 -- Name: bottom bottom_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -514,7 +516,7 @@ ALTER TABLE ONLY public.bottom
 
 
 --
--- TOC entry 3247 (class 2606 OID 40999)
+-- TOC entry 3247 (class 2606 OID 41373)
 -- Name: cupcakedetail cupcakedetail_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -523,15 +525,16 @@ ALTER TABLE ONLY public.cupcakedetail
 
 
 --
--- TOC entry 3245 (class 2606 OID 40997)
+-- TOC entry 3249 (class 2606 OID 41375)
 -- Name: order order_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public."order"
     ADD CONSTRAINT order_pkey PRIMARY KEY (order_id);
 
+
 --
--- TOC entry 3249 (class 2606 OID 41001)
+-- TOC entry 3251 (class 2606 OID 41377)
 -- Name: topping topping_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -540,7 +543,7 @@ ALTER TABLE ONLY public.topping
 
 
 --
--- TOC entry 3243 (class 2606 OID 41003)
+-- TOC entry 3245 (class 2606 OID 41379)
 -- Name: bottom unique_bottom_flavor; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -549,16 +552,7 @@ ALTER TABLE ONLY public.bottom
 
 
 --
--- TOC entry 3251 (class 2606 OID 41005)
--- Name: topping unique_topping_flavor; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.topping
-    ADD CONSTRAINT unique_topping_flavor UNIQUE (flavor);
-
-
---
--- TOC entry 3253 (class 2606 OID 41007)
+-- TOC entry 3255 (class 2606 OID 41383)
 -- Name: users unique_email; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -567,7 +561,16 @@ ALTER TABLE ONLY public.users
 
 
 --
--- TOC entry 3255 (class 2606 OID 41009)
+-- TOC entry 3253 (class 2606 OID 41381)
+-- Name: topping unique_topping_flavor; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.topping
+    ADD CONSTRAINT unique_topping_flavor UNIQUE (flavor);
+
+
+--
+-- TOC entry 3257 (class 2606 OID 41385)
 -- Name: users users_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -576,7 +579,7 @@ ALTER TABLE ONLY public.users
 
 
 --
--- TOC entry 3263 (class 2606 OID 41049)
+-- TOC entry 3258 (class 2606 OID 41386)
 -- Name: basket basket_cupcakedetail_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -585,7 +588,7 @@ ALTER TABLE ONLY public.basket
 
 
 --
--- TOC entry 3264 (class 2606 OID 41044)
+-- TOC entry 3259 (class 2606 OID 41391)
 -- Name: basket basket_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -594,7 +597,7 @@ ALTER TABLE ONLY public.basket
 
 
 --
--- TOC entry 3259 (class 2606 OID 41010)
+-- TOC entry 3260 (class 2606 OID 41396)
 -- Name: cupcakedetail foreignkey_bottom; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -603,7 +606,7 @@ ALTER TABLE ONLY public.cupcakedetail
 
 
 --
--- TOC entry 3261 (class 2606 OID 41015)
+-- TOC entry 3263 (class 2606 OID 41401)
 -- Name: orderline foreignkey_order_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -612,7 +615,7 @@ ALTER TABLE ONLY public.orderline
 
 
 --
--- TOC entry 3262 (class 2606 OID 41020)
+-- TOC entry 3264 (class 2606 OID 41406)
 -- Name: orderline foreignkey_orderdetail_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -621,7 +624,7 @@ ALTER TABLE ONLY public.orderline
 
 
 --
--- TOC entry 3260 (class 2606 OID 41025)
+-- TOC entry 3261 (class 2606 OID 41411)
 -- Name: cupcakedetail foreignkey_topping; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -630,7 +633,7 @@ ALTER TABLE ONLY public.cupcakedetail
 
 
 --
--- TOC entry 3258 (class 2606 OID 41030)
+-- TOC entry 3262 (class 2606 OID 41416)
 -- Name: order foreignkey_user_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -647,7 +650,7 @@ ALTER TABLE ONLY public."order"
 REVOKE USAGE ON SCHEMA public FROM PUBLIC;
 
 
--- Completed on 2024-04-03 13:49:41 UTC
+-- Completed on 2024-04-04 14:58:12 UTC
 
 --
 -- PostgreSQL database dump complete
