@@ -20,7 +20,7 @@ SET row_security = off;
 
 ALTER TABLE IF EXISTS ONLY public."order" DROP CONSTRAINT IF EXISTS foreignkey_user_id;
 ALTER TABLE IF EXISTS ONLY public.cupcakedetail DROP CONSTRAINT IF EXISTS foreignkey_topping;
-ALTER TABLE IF EXISTS ONLY public.orderline DROP CONSTRAINT IF EXISTS foreignkey_orderdetail_id;
+ALTER TABLE IF EXISTS ONLY public.orderline DROP CONSTRAINT IF EXISTS foreignkey_cupcakedetail_id;
 ALTER TABLE IF EXISTS ONLY public.orderline DROP CONSTRAINT IF EXISTS foreignkey_order_id;
 ALTER TABLE IF EXISTS ONLY public.cupcakedetail DROP CONSTRAINT IF EXISTS foreignkey_bottom;
 ALTER TABLE IF EXISTS ONLY public.basket DROP CONSTRAINT IF EXISTS basket_user_id_fkey;
@@ -45,7 +45,7 @@ DROP TABLE IF EXISTS public.users;
 DROP SEQUENCE IF EXISTS public.topping_topping_id_seq;
 DROP TABLE IF EXISTS public.topping;
 DROP TABLE IF EXISTS public.orderline;
-DROP SEQUENCE IF EXISTS public.orderdetail_orderdetail_id_seq;
+DROP SEQUENCE IF EXISTS public.cupcakedetail_cupcakedetail_id_seq;
 DROP SEQUENCE IF EXISTS public.order_order_id_seq;
 DROP TABLE IF EXISTS public."order";
 DROP TABLE IF EXISTS public.cupcakedetail;
@@ -54,7 +54,6 @@ DROP TABLE IF EXISTS public.bottom;
 DROP SEQUENCE IF EXISTS public.basket_basket_id_seq;
 DROP TABLE IF EXISTS public.basket;
 DROP SCHEMA IF EXISTS public;
-
 --
 -- TOC entry 5 (class 2615 OID 41330)
 -- Name: public; Type: SCHEMA; Schema: -; Owner: pg_database_owner
@@ -210,10 +209,10 @@ ALTER SEQUENCE public.order_order_id_seq OWNED BY public."order".order_id;
 
 --
 -- TOC entry 222 (class 1259 OID 41346)
--- Name: orderdetail_orderdetail_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: cupcakedetail_cupcakedetail_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
-CREATE SEQUENCE public.orderdetail_orderdetail_id_seq
+CREATE SEQUENCE public.cupcakedetail_cupcakedetail_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -221,15 +220,15 @@ CREATE SEQUENCE public.orderdetail_orderdetail_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.orderdetail_orderdetail_id_seq OWNER TO postgres;
+ALTER SEQUENCE public.cupcakedetail_cupcakedetail_id_seq OWNER TO postgres;
 
 --
 -- TOC entry 3431 (class 0 OID 0)
 -- Dependencies: 222
--- Name: orderdetail_orderdetail_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: cupcakedetail_cupcakedetail_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
-ALTER SEQUENCE public.orderdetail_orderdetail_id_seq OWNED BY public.cupcakedetail.cupcakedetail_id;
+ALTER SEQUENCE public.cupcakedetail_cupcakedetail_id_seq OWNED BY public.cupcakedetail.cupcakedetail_id;
 
 
 --
@@ -239,7 +238,7 @@ ALTER SEQUENCE public.orderdetail_orderdetail_id_seq OWNED BY public.cupcakedeta
 
 CREATE TABLE public.orderline (
                                   order_id bigint NOT NULL,
-                                  orderdetail_id bigint NOT NULL
+                                  cupcakedetail_id bigint NOT NULL
 );
 
 
@@ -344,7 +343,7 @@ ALTER TABLE ONLY public.bottom ALTER COLUMN bottom_id SET DEFAULT nextval('publi
 -- Name: cupcakedetail cupcakedetail_id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY public.cupcakedetail ALTER COLUMN cupcakedetail_id SET DEFAULT nextval('public.orderdetail_orderdetail_id_seq'::regclass);
+ALTER TABLE ONLY public.cupcakedetail ALTER COLUMN cupcakedetail_id SET DEFAULT nextval('public.cupcakedetail_cupcakedetail_id_seq'::regclass);
 
 
 --
@@ -449,7 +448,7 @@ INSERT INTO public.users (user_id, email, password, role, balance_dkk) VALUES (2
 -- Name: basket_basket_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.basket_basket_id_seq', 1, true);
+SELECT pg_catalog.setval('public.basket_basket_id_seq', 1, false);
 
 
 --
@@ -458,7 +457,7 @@ SELECT pg_catalog.setval('public.basket_basket_id_seq', 1, true);
 -- Name: bottom_bottom_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.bottom_bottom_id_seq', 5, true);
+SELECT pg_catalog.setval('public.bottom_bottom_id_seq', 6, false);
 
 
 --
@@ -473,10 +472,10 @@ SELECT pg_catalog.setval('public.order_order_id_seq', 1, false);
 --
 -- TOC entry 3437 (class 0 OID 0)
 -- Dependencies: 222
--- Name: orderdetail_orderdetail_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+-- Name: cupcakedetail_cupcakedetail_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.orderdetail_orderdetail_id_seq', 5, true);
+SELECT pg_catalog.setval('public.cupcakedetail_cupcakedetail_id_seq', 1, false);
 
 
 --
@@ -485,7 +484,7 @@ SELECT pg_catalog.setval('public.orderdetail_orderdetail_id_seq', 5, true);
 -- Name: topping_topping_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.topping_topping_id_seq', 9, true);
+SELECT pg_catalog.setval('public.topping_topping_id_seq', 10, false);
 
 
 --
@@ -494,7 +493,7 @@ SELECT pg_catalog.setval('public.topping_topping_id_seq', 9, true);
 -- Name: users_user_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.users_user_id_seq', 2, true);
+SELECT pg_catalog.setval('public.users_user_id_seq', 3, false);
 
 
 --
@@ -620,7 +619,7 @@ ALTER TABLE ONLY public.orderline
 --
 
 ALTER TABLE ONLY public.orderline
-    ADD CONSTRAINT foreignkey_orderdetail_id FOREIGN KEY (orderdetail_id) REFERENCES public.cupcakedetail(cupcakedetail_id) NOT VALID;
+    ADD CONSTRAINT foreignkey_cupcakedetail_id FOREIGN KEY (cupcakedetail_id) REFERENCES public.cupcakedetail(cupcakedetail_id) NOT VALID;
 
 
 --
