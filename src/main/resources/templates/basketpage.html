@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>All Cupcakes Added to Basket</title>
+    <link href="/public/css/basketpagestyle.css" th:href="@{/css/basketpagestyle.css}" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Arizonia"/>
+    <link href="/public/css/frontpagestyle.css" th:href="@{/css/frontpagestyle.css}" rel="stylesheet"/>
+</head>
+<body>
+
+<header>
+    <h1 style="font-family: 'Arizonia', sans-serif; background: url('/images/cupcakelogo.png') center no-repeat;">
+        Olsker Cupcakes
+    </h1>
+    <div class="menu-section">
+        <nav>
+            <div class="left-side">
+                <a class="menu-chosen" href="/templates/frontpage.html" th:href="@{/frontpage}"><i class="fa fa-home"
+                                                                                                   style="padding-right: 10px"></i>Home</a>
+                <a href=""><i class="fa fa-list-ul" style="padding-right: 10px"></i>
+                    <span th:if="${#ctx.session.currentUser.role == 'user'}">My Orders</span>
+                    <span th:if="${#ctx.session.currentUser.role == 'admin'}">All Orders</span>
+                </a>
+                <span th:if="${#ctx.session.currentUser.role == 'admin'}"><a href=""><i class="fa fa-users"
+                                                                                        style="padding-right: 10px"></i>Customers</a></span>
+            </div>
+            <div class="right-side">
+                    <span th:if="${#ctx.session.currentUser.role == 'user'}">
+                        <a class="basket" href="/templates/basketpage.html" th:href="@{/yourBasket}">
+                            <i class="fa" style="font-size:50px;">&#xf07a;</i>
+                            <span class='badge' id='lblCartCount' th:text="${amountInBasket}">0</span>
+                        </a>
+                    </span>
+            </div>
+        </nav>
+    </div>
+</header>
+
+<div class="content-section">
+    <img src="/public/images/basket-bg-img.jpg" alt="Delicious Cupcakes" th:src="@{/images/basket-bg-img.jpg}">
+    <div class="content-display-container">
+        <div th:if="${!#lists.isEmpty(allCupcakesInBasket)}">
+            <form th:action="@{/cupcakesPurchased}" method="POST">
+                <div class="outer-border-basket">
+                    <div class="basket-header">
+                        <h5>Cupcakes in your basket:</h5>
+                    </div>
+
+                    <div class="cupcakes-content">
+                        <div class="display-single-item" th:each="cupcake: ${allCupcakesInBasket}">
+                            <div class="single-item-content">
+                                <div class="flavor-desc">
+                                    <div class="display-flavor">
+                                        Top: <span class="flavor-title" th:text="${cupcake.topping.flavor}"></span>
+                                    </div>
+                                    <div class="display-flavor">
+                                        Bottom: <span class="flavor-title" th:text="${cupcake.bottom.flavor}"></span>
+                                    </div>
+                                </div>
+                                <div class="price-desc">
+                                    <div class="display-amount">
+                                        Quantity: <span th:text="${cupcake.amount}"></span> pcs.
+                                    </div>
+                                    <div class="display-price">
+                                        Pr. pc: <span th:text="${cupcake.priceeach}"></span> kr
+                                    </div>
+                                </div>
+                                <div class="total-desc">
+                                    <div class="display-total"
+                                         th:with="totalAmount=(${cupcake.amount * cupcake.priceeach})">
+                                        Price: <span style="text-decoration: underline black"
+                                                     th:text="${totalAmount}"></span>kr.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="basket-footer">
+                        <div class="total-price">
+                            <h6>Total price: <span
+                                    style="color: white; font-style: normal; text-decoration: underline white"
+                                    th:text="${totalPrice} + kr."></span>
+                            </h6>
+                        </div>
+                        <button class="buy-button" type="submit">Buy</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <div th:if="${#lists.isEmpty(allCupcakesInBasket)}">
+            <div class="no-form">
+                <div class="outer-border-basket">
+                    <div class="basket-header">
+                        <h5>Cupcakes in your basket:</h5>
+                    </div>
+
+                    <div class="cupcakes-content">
+                        <div class="display-single-item">
+                            <div class="single-item-content">
+                                <h6>No Cupcakes added to Basket</h6>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="basket-footer"></div>
+                </div>
+            </div>
+        </div>
+
+        <div th:if="${purchased} == true">
+            <div class="no-form">
+                <div class="outer-border-basket">
+                    <div class="basket-header">
+                        <h5>Cupcakes in your basket:</h5>
+                    </div>
+
+                    <div class="cupcakes-content">
+                        <div class="display-single-item">
+                            <div class="single-item-content">
+                                <h6>Thanks for the purchase! Your order nr. is <span th:text="${orderNumber}"></span>
+                                </h6>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="basket-footer"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <div class="left-side">
+            <h2>Logged in with: <span class="email" th:text="${currentUserEmail}"></span></h2>
+        </div>
+        <div class="right-side">
+            <a class="log-out" href="/logout"><i class="fa fa-sign-out" style="padding-left: 10px">Log Out</i></a>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

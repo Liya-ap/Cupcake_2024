@@ -1,0 +1,174 @@
+/*----------------------------------------- GENERAL ------------------------------------------------------------------*/
+h5 {
+    color: white;
+    font-size: 2.2em;
+}
+
+h5, h6 {
+    font-weight: bold;
+    font-family: "Calibri Light", serif;
+}
+
+h6 {
+    font-size: 2.5em;
+    font-style: italic;
+}
+
+/*----------------------------------------- SPECIFIC ------------------------------------------------------------------*/
+.outer-border-basket {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    width: 90%;
+    height: 90%;
+    border: 10px solid rgba(255, 255, 255, 0.4);
+    border-radius: 5px;
+}
+
+.cupcakes-content {
+    overflow-y: scroll;
+    overflow-x: hidden;
+    height: 100%;
+}
+
+.basket-header {
+    background-color: #2a669d;
+    width: 98%;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: solid #cc6096 10px;
+}
+
+.display-single-item {
+    background-color: lightskyblue;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 99%;
+    height: 120px;
+    border: #6096cc double;
+}
+
+.basket-footer {
+    background-color: #2a669d;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 99%;
+    height: 100px;
+    border: solid #cc6096 10px;
+}
+
+.single-item-content {
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    flex-wrap:wrap;
+    align-items: center;
+    justify-content: center;
+    width: 98%;
+    height: 90%;
+}
+
+.flavor-desc, .price-desc {
+    background-color: white;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    font-family: "Roboto Light", sans-serif;
+}
+
+.total-desc {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    max-width: 30px;
+    height: 100%;
+}
+
+.display-total {
+    font-size: 1.8em;
+    font-weight: bold;
+}
+
+.display-flavor{
+    font-size: 1.7em;
+    font-weight: bold;
+    padding: 0 10px 0 10px;
+}
+
+.flavor-title {
+    font-style: italic;
+}
+
+.display-amount, .display-price {
+    font-size: 1.6em;
+    padding: 10px 10px 0 10px;
+}
+
+.basket-footer {
+    display: flex;
+    width: 98%;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.total-price {
+    width: 100%;
+}
+
+.buy-button {
+    width: 20%;
+    border: none;
+    color: white;
+    font-size: 2em;
+    background-color: #96cc60;
+    border-radius: 15px;
+    margin-right: 10%;
+    box-shadow: 0 6px 0 #2a4113;
+}
+
+.buy-button:hover {
+    background-color: #608538;
+    box-shadow: 0 2px 0 #2a4113;
+}
+
+/*----------------------------------------- MEDIA ------------------------------------------------------------------*/
+/* If the screen size is 1150px wide or less*/
+@media screen and (max-width: 1250px) {
+    h6 {
+        font-size: 1em;
+    }
+
+    .basket-header {
+        width: 98%;
+    }
+    .display-single-item {
+        width: 98%;
+    }
+
+    .display-flavor {
+        font-size: 1.2em;
+        padding: 0 7px 0 7px;
+    }
+
+    .display-amount, .display-price {
+        font-size: 1em;
+        padding: 7px 10px 0 10px;
+    }
+
+    .display-total {
+        font-size: 1.3em;
+    }
+
+    .total-price {
+        font-size: 2em;
+    }
+}
