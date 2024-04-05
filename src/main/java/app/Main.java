@@ -1,6 +1,7 @@
 package app;
 
 import app.config.ThymeleafConfig;
+import app.controllers.BasketController;
 import app.controllers.UserController;
 import app.persistence.ConnectionPool;
 import app.controllers.CupcakeController;
@@ -19,5 +20,6 @@ public class Main {
         // Routing here:
         UserController.addRoutes(app, ConnectionPool.getInstance());
         CupcakeController.addRoutes(app, ConnectionPool.getInstance());
+        BasketController.addRoutes(app, ConnectionPool.getInstance());
     }
 }
