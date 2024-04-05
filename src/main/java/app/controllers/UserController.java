@@ -1,9 +1,12 @@
 package app.controllers;
 
+import app.validators.EmailValidator;
 import app.entities.User;
 import app.exceptions.DatabaseException;
 import app.persistence.ConnectionPool;
 import app.persistence.UserMapper;
+import app.validators.PasswordValidator;
+import app.validators.PayUserValidate;
 import io.javalin.Javalin;
 import io.javalin.http.Context;
 
@@ -25,18 +28,38 @@ public class UserController {
         ctx.render("payuser.html");
     }
 
-    private static void payUser(Context ctx, ConnectionPool connectionPool) {
-        // Hent formparametre
-        int amount = Integer.parseInt(ctx.formParam("amount"));
-        int userId = Integer.parseInt(ctx.formParam("userId"));
+    private static void payUser(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
 
-        try {
-            UserMapper.setUserBalance(amount, userId, connectionPool);
+        //Check om amount er et talværdi
+        if (PayUserValidate.isValidInput(ctx.formParam("amount"))) {
+
+            // Hent formparametre
+            int amount = Integer.parseInt(ctx.formParam("amount"));
+            int userId = Integer.parseInt(ctx.formParam("userId"));
+            int balance = Integer.parseInt(ctx.formParam("balance"));
+
+            //Check om der er nok på kontoen, hvis der trækkes fra
+            if (PayUserValidate.isValidPayment(amount, balance)) {
+
+                try {
+                    UserMapper.setUserBalance(amount, userId, connectionPool);
+                    List<User> userList = UserMapper.getAllUsers(connectionPool);
+                    ctx.attribute("userList", userList);
+                    ctx.render("payuser.html");
+                } catch (DatabaseException e) {
+                    ctx.attribute("message", "Something went wrong. Try again.");
+                    ctx.render("payuser.html");
+                }
+            } else {
+                List<User> userList = UserMapper.getAllUsers(connectionPool);
+                ctx.attribute("userList", userList);
+                ctx.attribute("message", "Insufficient funds. Try again.");
+                ctx.render("payuser.html");
+            }
+        } else {
             List<User> userList = UserMapper.getAllUsers(connectionPool);
             ctx.attribute("userList", userList);
-            ctx.render("payuser.html");
-        } catch (DatabaseException e) {
-            ctx.attribute("message", "Something went wrong. Try again.");
+            ctx.attribute("message", "Invalid input. Try again.");
             ctx.render("payuser.html");
         }
     }
@@ -70,18 +93,29 @@ public class UserController {
         String password1 = ctx.formParam("password1");
         String password2 = ctx.formParam("password2");
 
-        if (password1.equals(password2)) {
-            try {
-                UserMapper.createuser(email, password1, connectionPool);
-                ctx.attribute("message", "User with email " + email + " succesfully created. You can now login.");
-                ctx.render("login.html");
-            } catch (DatabaseException e) {
-                ctx.attribute("message", "Email already exists. Try again.");
+        if (EmailValidator.isValidEmail(email)) {
+            if (PasswordValidator.isValidPassword(password1)) {
+                if (password1.equals(password2)) {
+                    try {
+                        UserMapper.createuser(email, password1, connectionPool);
+                        ctx.attribute("message", "User with email " + email + " succesfully created. You can now login.");
+                        ctx.render("login.html");
+                    } catch (DatabaseException e) {
+                        ctx.attribute("message", "Email already exists. Try again.");
+                        ctx.render("createuser.html");
+                    }
+                } else {
+                    ctx.attribute("message", "The entered passwords don't match. Try again.");
+                    ctx.render("createuser.html");
+                }
+            } else {
+                ctx.attribute("message", "The entered password is not valid. It must contain minimum 8 letters, an uppercase, a lowercase and a number. Try again.");
                 ctx.render("createuser.html");
             }
         } else {
-            ctx.attribute("message", "The entered passwords don't match. Try again.");
+            ctx.attribute("message", "The entered email is not valid. Try again.");
             ctx.render("createuser.html");
         }
     }
 }
+
