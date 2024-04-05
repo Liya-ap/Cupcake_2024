@@ -6,10 +6,15 @@ public class Topping {
     private String flavor;
     private int price;
 
+    public Topping(String flavor) {
+        this.flavor = flavor;
+    }
+
     public Topping(int toppingID, String flavor, int price) {
         this.toppingID = toppingID;
         this.flavor = flavor;
         this.price = price;
+
     }
 
     public int getToppingID() {

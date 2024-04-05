@@ -15,8 +15,10 @@ public class UserController {
         app.post("login", ctx -> login(ctx, connectionPool));
         app.get("createuser", ctx -> ctx.render("createuser.html"));
         app.post("createuser", ctx -> createUser(ctx, connectionPool));
+
         app.get("payuser", ctx -> displayPayUser(ctx, connectionPool));
         app.post("payuser", ctx -> payUser(ctx, connectionPool));
+
     }
 
     private static void displayPayUser(Context ctx, ConnectionPool connectionPool) throws DatabaseException {

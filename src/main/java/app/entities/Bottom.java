@@ -6,10 +6,16 @@ public class Bottom {
     private String flavor;
     private int price;
 
+    public Bottom(String flavor) {
+        this.flavor = flavor;
+    }
+
     public Bottom(int bottomID, String flavor, int price) {
         this.bottomID = bottomID;
         this.flavor = flavor;
         this.price = price;
+
+
     }
 
     public int getBottomID() {

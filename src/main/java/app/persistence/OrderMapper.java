@@ -1,8 +1,6 @@
 package app.persistence;
 
-import app.entities.Order;
-import app.entities.OrderDetails;
-import app.entities.User;
+import app.entities.*;
 import app.exceptions.DatabaseException;
 
 import java.sql.*;
@@ -12,108 +10,93 @@ import java.sql.Connection;
 
 
 public class OrderMapper {
+        public static List<Order> getAllUserOrders(int userId, ConnectionPool connectionPool) throws DatabaseException {
+        List<Order> listOfAllOrders = new ArrayList<>();
+        List<Cupcake> listofCupcakes = new ArrayList<>();
+        String sql = "SELECT public.order.order_id, bottom.flavor AS bottomflavor, topping.flavor AS toppingflavor," +
+                " cupcakedetail.price_each AS priceeach, cupcakedetail.amount AS amount, (price_each * amount) AS totalprice \n" +
+                "FROM public.order\n" +
+                "INNER JOIN public.orderline ON public.order.order_id = orderline.order_id\n" +
+                "INNER JOIN users ON public.order.user_id = users.user_id\n" +
+                "INNER JOIN cupcakedetail ON orderline.cupcakedetail_id = cupcakedetail.cupcakedetail_id\n" +
+                "INNER JOIN bottom ON cupcakedetail.bottom_id = bottom.bottom_id\n" +
+                "INNER JOIN topping ON cupcakedetail.topping_id = topping.topping_id\n" +
+                "WHERE public.order.user_id = ?";
 
-
-    public static OrderDetails addOrderDetails(int bottomId, int toppingID, ConnectionPool connectionPool) throws DatabaseException {
-        OrderDetails newOrderDetails = null;
-
-        String sql = "INSERT INTO public.orderdetail( orderdetail_id, topping_id, bottom_id, amount, price_each) VALUES (?, ?, ?, ?, ?)";
         try (
                 Connection connection = connectionPool.getConnection();
                 PreparedStatement ps = connection.prepareStatement(sql)
         ) {
-            ps.setInt(1, (toppingID));
-            ps.setInt(3, (bottomId));
-            int rowsAffected = ps.executeUpdate();
-            if (rowsAffected == 1) {
-                ResultSet rs = ps.getGeneratedKeys();
-                rs.next();
-                int newId = rs.getInt(1);
-                newOrderDetails = new OrderDetails(newId, toppingID, bottomId, newOrderDetails.getAmount(), newOrderDetails.getPriceEach());
-            } else {
-                throw new DatabaseException("Fejl under indsætning af Ordredetaljer: ");
-            }
-
-        } catch (SQLException e) {
-            throw new DatabaseException("Fejl i SQL!!", e.getMessage());
-        }
-
-        return newOrderDetails;
-    }
-
-    public static List<OrderDetails> seeOrderLine(User user, int bottomId, int toppingID, ConnectionPool connectionPool) throws DatabaseException {
-        List<OrderDetails> orderLineList = new ArrayList<>();
-
-        String sql = "SELECT SUM(price_each) AS total_price FROM public.orderdetail WHERE bottom_id = ? AND topping_id = ? AND user_id = ?";
-        try (
-                Connection connection = connectionPool.getConnection();
-                PreparedStatement ps = connection.prepareStatement(sql)
-        ) {
-            ps.setInt(1, bottomId);
-            ps.setInt(2, toppingID);
-            ps.setInt(3, user.getUserId());
+            ps.setInt(1, userId);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                int topping = rs.getInt("topping_id");
-                int bottom = rs.getInt("bottom_id");
-                int price = rs.getInt("price_each");
+                int orderId = rs.getInt("order_id");
+                String bottomFlavor = rs.getString("bottomflavor");
+                String toppingFlavor = rs.getString("toppingflavor");
+                int priceEach = rs.getInt("priceeach");
+                int amount = rs.getInt("amount");
+                int totalPrice = rs.getInt("totalprice");
 
-                orderLineList.add(new OrderDetails(topping, bottom, price));
+                listofCupcakes.add(new Cupcake(new Topping(toppingFlavor), new Bottom(bottomFlavor), priceEach, amount, totalPrice));
+
+                listOfAllOrders.add(new Order(orderId, userId, listofCupcakes));
             }
         } catch (SQLException e) {
             throw new DatabaseException("Fejl i SQL!!", e.getMessage());
         }
-        return orderLineList;
+        return listOfAllOrders;
     }
 
-
-    public static List<Order> showAllOrders(int orderID, ConnectionPool connectionPool) throws DatabaseException {
-        List<Order>listOfOrders = new ArrayList<>();
-        String sql = "SELECT order_id, user_id FROM public.order WHERE order_id = ? AND user_id =? ORDER BY user_id";
-
+    public static List<Order> getAllOrders(ConnectionPool connectionPool) throws DatabaseException {
+        List<Order> listOfAllOrders = new ArrayList<>();
+        List<Cupcake> listofCupcakes = new ArrayList<>();
+        String sql = "SELECT public.order.order_id, public.order.user_id, bottom.flavor AS bottomflavor, topping.flavor AS toppingflavor," +
+                " cupcakedetail.price_each AS priceeach, cupcakedetail.amount AS amount, (price_each * amount) AS totalprice \n" +
+                "FROM public.order\n" +
+                "INNER JOIN public.orderline ON public.order.order_id = orderline.order_id\n" +
+                "INNER JOIN users ON public.order.user_id = users.user_id\n" +
+                "INNER JOIN cupcakedetail ON orderline.cupcakedetail_id = cupcakedetail.cupcakedetail_id\n" +
+                "INNER JOIN bottom ON cupcakedetail.bottom_id = bottom.bottom_id\n" +
+                "INNER JOIN topping ON cupcakedetail.topping_id = topping.topping_id\n";
         try (
                 Connection connection = connectionPool.getConnection();
                 PreparedStatement ps = connection.prepareStatement(sql)
         ) {
-            ps.setInt(1, orderID);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 int orderId = rs.getInt("order_id");
                 int userId = rs.getInt("user_id");
+                String bottomFlavor = rs.getString("bottomflavor");
+                String toppingFlavor = rs.getString("toppingflavor");
+                int priceEach = rs.getInt("priceeach");
+                int amount = rs.getInt("amount");
+                int totalPrice = rs.getInt("totalprice");
 
-                listOfOrders.add(new Order(orderId,userId));
+                listofCupcakes.add(new Cupcake(new Topping(toppingFlavor), new Bottom(bottomFlavor), priceEach, amount, totalPrice));
+
+                listOfAllOrders.add(new Order(orderId, userId, listofCupcakes));
             }
         } catch (SQLException e) {
             throw new DatabaseException("Fejl i SQL!!", e.getMessage());
         }
-        return listOfOrders;
+        return listOfAllOrders;
     }
 
-    public static void deleteOrder(int orderId, ConnectionPool connectionPool) throws DatabaseException {
-        String sql = "DELETE FROM public.order where order_id = ?";
+    public static void deleteOrderLine(int orderId, ConnectionPool connectionPool) throws DatabaseException {
+            String sqlOrderLine = "DELETE FROM orderline WHERE order_id = ?";
+            String sqlOrder = "DELETE FROM public.order WHERE order_id = ?";
 
-        try (
-                Connection connection = connectionPool.getConnection();
-                PreparedStatement ps = connection.prepareStatement(sql)
-        ) {
-            ps.setInt(1, orderId);
-            int rowsAffected = ps.executeUpdate();
-            if (rowsAffected != 1) {
-                throw new DatabaseException("Fejl i opdatering af en ordre");
-            }
-        } catch (SQLException e) {
-            throw new DatabaseException("Fejl ved sletning af en Ordre i databasen", e.getMessage());
-        }
-    }
-    public static void deleteOrderLine(int orderLine, ConnectionPool connectionPool) throws DatabaseException {
-        String sql = "DELETE FROM public.orderline where order_id = ? AND orderdetail_id = ?";
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement psDeleteOrderLines = connection.prepareStatement(sqlOrderLine);
+             PreparedStatement psDeleteOrder = connection.prepareStatement(sqlOrder)) {
 
-        try (
-                Connection connection = connectionPool.getConnection();
-                PreparedStatement ps = connection.prepareStatement(sql)
-        ) {
-            ps.setInt(1, orderLine);
-            int rowsAffected = ps.executeUpdate();
+            // Delete order lines first
+            psDeleteOrderLines.setInt(1, orderId);
+            psDeleteOrderLines.executeUpdate();
+
+            // Then delete the order
+            psDeleteOrder.setInt(1, orderId);
+            int rowsAffected = psDeleteOrder.executeUpdate();
             if (rowsAffected != 1) {
                 throw new DatabaseException("Fejl i opdatering af en ordre");
             }
@@ -121,5 +104,4 @@ public class OrderMapper {
             throw new DatabaseException("Fejl ved sletning af en Ordre line  i databasen", e.getMessage());
         }
     }
-
 }

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<h1>
+    Her er dine tidligere ordre
+</h1>
+
+<table>
+    <thead>
+    <tr>
+        <th>Order Number</th>
+        <th>Toppings</th>
+        <th>Bottoms</th>
+        <th>Amount</th>
+        <th>Price each</th>
+        <th>Total price</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="order: ${listOfOrders}">
+        <td th:text="${order.orderId}"></td>
+        <td>
+            <table>
+                <tbody>
+                <tr th:each="cupcake: ${order.cupcakes}">
+                    <td th:text="${cupcake.topping.flavor}"></td>
+                    <td th:text="${cupcake.bottom.flavor}"></td>
+                    <td th:text="${cupcake.amount}"></td>
+                    <td th:text="${cupcake.priceEach}"></td>
+                    <td th:text="${cupcake.totalprice}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+</body>
+</html>

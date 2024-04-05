@@ -6,18 +6,15 @@ public class Order {
 
     private int orderId;
     private int userId;
-    private List<OrderDetails> orderDetails;
+    private List<Cupcake> cupcakes;
 
-    public Order(int orderId, int userId, List<OrderDetails> orderDetails) {
+    public Order(int orderId, int userId, List<Cupcake> cupcakes) {
         this.orderId = orderId;
         this.userId = userId;
-        this.orderDetails = orderDetails;
+        this.cupcakes = cupcakes;
     }
 
-    public Order(int orderId, int userId) {
-        this.orderId = orderId;
-        this.userId = userId;
-    }
+
 
     public int getOrderId() {
         return orderId;
@@ -35,12 +32,12 @@ public class Order {
         this.userId = userId;
     }
 
-    public List<OrderDetails> getOrderDetails() {
-        return orderDetails;
+    public List<Cupcake> getCupcakes() {
+        return cupcakes;
     }
 
-    public void setOrderDetails(List<OrderDetails> orderDetails) {
-        this.orderDetails = orderDetails;
+    public void setCupcakes(List<OrderDetails> orderDetails) {
+        this.cupcakes = cupcakes;
     }
 
 }
