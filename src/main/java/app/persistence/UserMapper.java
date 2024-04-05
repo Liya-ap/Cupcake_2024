@@ -7,6 +7,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class UserMapper {
     public static User login(String email, String password, ConnectionPool connectionPool) throws DatabaseException {
@@ -54,5 +56,46 @@ public class UserMapper {
             }
             throw new DatabaseException(msg, e.getMessage());
         }
+    }
+
+    public static void setUserBalance(int amount, int userId, ConnectionPool connectionPool) throws DatabaseException {
+        String sql = "update users set balance_dkk = ? + balance_dkk where user_id = ?";
+
+        try (
+                Connection connection = connectionPool.getConnection();
+                PreparedStatement ps = connection.prepareStatement(sql)
+        ) {
+            ps.setInt(1, amount);
+            ps.setInt(2, userId);
+            int rowsAffected = ps.executeUpdate();
+            if (rowsAffected != 1) {
+                throw new DatabaseException("Error in updating user balance");
+            }
+        } catch (SQLException e) {
+            throw new DatabaseException("Error in updating balance in database", e.getMessage());
+        }
+    }
+
+    public static List<User> getAllUsers(ConnectionPool connectionPool) throws DatabaseException {
+        List<User> userList = new ArrayList<>();
+        String sql = "select * from users ORDER BY email";
+
+        try (
+                Connection connection = connectionPool.getConnection();
+                PreparedStatement ps = connection.prepareStatement(sql)
+        ) {
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                int id = rs.getInt("user_id");
+                String email = rs.getString("email");
+                String password = rs.getString("password");
+                String role = rs.getString("role");
+                int balance = rs.getInt("balance_dkk");
+                userList.add(new User(id, email, password, role, balance));
+            }
+        } catch (SQLException e) {
+            throw new DatabaseException("Fejl!!!!", e.getMessage());
+        }
+        return userList;
     }
 }

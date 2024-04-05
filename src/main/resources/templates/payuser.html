@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<h1>Her kan admin overføre penge til user</h1>
+
+    <table>
+        <thead>
+        <tr>
+            <th>User</th>
+            <th>Balance</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="user: ${userList}" th:if="${user.role == 'user'}">
+            <td th:text="${user.email}"></td>
+            <td th:text="${user.balance}"></td>
+            <td>
+                <form method="POST" th:action="@{/payuser}">
+                    <input type="hidden" name="userId" th:value="${user.userid}" />
+                    <input type="text" name="amount" placeholder="Enter amount"/>
+                    <button type="submit">Add</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+</body>
+</html>
