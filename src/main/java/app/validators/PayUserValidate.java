@@ -3,7 +3,7 @@ package app.validators;
 public class PayUserValidate {
     public static boolean isValidInput(String payment) {
         try {
-            int payment1 = Integer.parseInt(payment);
+            Integer.parseInt(payment);
             return true;
         } catch (NumberFormatException e) {
             return false;
