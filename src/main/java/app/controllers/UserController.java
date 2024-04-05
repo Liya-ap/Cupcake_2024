@@ -7,12 +7,38 @@ import app.persistence.UserMapper;
 import io.javalin.Javalin;
 import io.javalin.http.Context;
 
+import java.util.List;
+
 public class UserController {
     public static void addRoutes(Javalin app, ConnectionPool connectionPool) {
         app.get("/", ctx -> ctx.render("login.html"));
         app.post("login", ctx -> login(ctx, connectionPool));
         app.get("createuser", ctx -> ctx.render("createuser.html"));
         app.post("createuser", ctx -> createUser(ctx, connectionPool));
+        app.get("payuser", ctx -> displayPayUser(ctx, connectionPool));
+        app.post("payuser", ctx -> payUser(ctx, connectionPool));
+    }
+
+    private static void displayPayUser(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
+        List<User> userList = UserMapper.getAllUsers(connectionPool);
+        ctx.attribute("userList", userList);
+        ctx.render("payuser.html");
+    }
+
+    private static void payUser(Context ctx, ConnectionPool connectionPool) {
+        // Hent formparametre
+        int amount = Integer.parseInt(ctx.formParam("amount"));
+        int userId = Integer.parseInt(ctx.formParam("userId"));
+
+        try {
+            UserMapper.setUserBalance(amount, userId, connectionPool);
+            List<User> userList = UserMapper.getAllUsers(connectionPool);
+            ctx.attribute("userList", userList);
+            ctx.render("payuser.html");
+        } catch (DatabaseException e) {
+            ctx.attribute("message", "Something went wrong. Try again.");
+            ctx.render("payuser.html");
+        }
     }
 
     public static void login(Context ctx, ConnectionPool connectionPool) {
@@ -30,7 +56,6 @@ public class UserController {
             // Gem brugerens ordrehistorik i en liste og som attribute
             // List<Order> orderList = OrderMapper.getAllOrdersPerUser(user.getUserId(), connectionPool);
             // ctx.attribute("orderList", orderList);
-
             ctx.redirect("/frontpage");
         } catch (DatabaseException e) {
             // Hvis nej, send tilbage til login side med fejl besked
