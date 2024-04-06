@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<h1>
+    Her er alle Order
+</h1>
+
+<table>
+    <thead>
+    <tr>
+        <th>Order Number</th>
+        <th>User ID</th>
+        <th>Toppings</th>
+        <th>Bottoms</th>
+        <th>Amount</th>
+        <th>Price each</th>
+        <th>Total price</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="order: ${listOfAllOrders}">
+        <td th:text="${order.orderId}"></td>
+        <td>
+            <table>
+                <tbody>
+                <tr th:each="cupcake: ${order.cupcakes}">
+                    <td th:text="${cupcake.topping.flavor}"></td>
+                    <td th:text="${cupcake.bottom.flavor}"></td>
+                    <td th:text="${cupcake.amount}"></td>
+                    <td th:text="${cupcake.priceEach}"></td>
+                    <td th:text="${cupcake.totalprice}"></td>
+                    <td>
+                        <form method="POST" th:action="@{/deleteorder}">
+                            <button type="submit">Delete Order</button>
+                        </form>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+</body>
+</html>

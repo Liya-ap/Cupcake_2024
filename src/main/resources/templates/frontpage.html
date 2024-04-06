@@ -18,8 +18,8 @@
                 <a class="menu-chosen" href="/templates/frontpage.html" th:href="@{/frontpage}"><i class="fa fa-home"
                                                                                                    style="padding-right: 10px"></i>Home</a>
                 <a href=""><i class="fa fa-list-ul" style="padding-right: 10px"></i>
-                    <span th:if="${#ctx.session.currentUser.role == 'user'}">My Orders</span>
-                    <span th:if="${#ctx.session.currentUser.role == 'admin'}">All Orders</span>
+                    <span th:if="${#ctx.session.currentUser.role == 'user'}"> <a href="/customerorder" > My Orders</a></span>
+                    <span th:if="${#ctx.session.currentUser.role == 'admin'}"><a href="/adminorder" >All Orders</a></span>
                 </a>
                 <span th:if="${#ctx.session.currentUser.role == 'admin'}"><a href="/payuser"><i class="fa fa-users"
                                                                                         style="padding-right: 10px"></i>Customers</a></span>
