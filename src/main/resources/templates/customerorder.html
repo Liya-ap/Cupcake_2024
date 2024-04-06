@@ -6,16 +6,14 @@
 </head>
 <body>
 
-<h1>
-    Her er dine tidligere ordre
-</h1>
+<h1>Her er dine tidligere ordre</h1>
 
 <table>
     <thead>
     <tr>
         <th>Order Number</th>
-        <th>Toppings</th>
-        <th>Bottoms</th>
+        <th>Topping</th>
+        <th>Bottom</th>
         <th>Amount</th>
         <th>Price each</th>
         <th>Total price</th>
@@ -25,17 +23,29 @@
     <tr th:each="order: ${listOfOrders}">
         <td th:text="${order.orderId}"></td>
         <td>
-            <table>
-                <tbody>
-                <tr th:each="cupcake: ${order.cupcakes}">
-                    <td th:text="${cupcake.topping.flavor}"></td>
-                    <td th:text="${cupcake.bottom.flavor}"></td>
-                    <td th:text="${cupcake.amount}"></td>
-                    <td th:text="${cupcake.priceEach}"></td>
-                    <td th:text="${cupcake.totalprice}"></td>
-                </tr>
-                </tbody>
-            </table>
+            <span th:each="cupcake: ${order.cupcakes}">
+                <span th:text="${cupcake.topping.flavor}"></span><br>
+            </span>
+        </td>
+        <td>
+            <span th:each="cupcake: ${order.cupcakes}">
+                <span th:text="${cupcake.bottom.flavor}"></span><br>
+            </span>
+        </td>
+        <td>
+            <span th:each="cupcake: ${order.cupcakes}">
+                <span th:text="${cupcake.priceEach}"></span><br>
+            </span>
+        </td>
+        <td>
+            <span th:each="cupcake: ${order.cupcakes}">
+                <span th:text="${cupcake.amount}"></span><br>
+            </span>
+        </td>
+        <td>
+            <span th:each="cupcake: ${order.cupcakes}">
+                <span th:text="${cupcake.totalprice}"></span><br>
+            </span>
         </td>
     </tr>
     </tbody>

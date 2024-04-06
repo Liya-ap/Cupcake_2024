@@ -8,11 +8,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.sql.Connection;
 
-
 public class OrderMapper {
-        public static List<Order> getAllUserOrders(int userId, ConnectionPool connectionPool) throws DatabaseException {
+    public static List<Order> getAllUserOrders(int userId, ConnectionPool connectionPool) throws DatabaseException {
+
         List<Order> listOfAllOrders = new ArrayList<>();
-        List<Cupcake> listofCupcakes = new ArrayList<>();
+
         String sql = "SELECT public.order.order_id, bottom.flavor AS bottomflavor, topping.flavor AS toppingflavor," +
                 " cupcakedetail.price_each AS priceeach, cupcakedetail.amount AS amount, (price_each * amount) AS totalprice \n" +
                 "FROM public.order\n" +
@@ -37,6 +37,8 @@ public class OrderMapper {
                 int amount = rs.getInt("amount");
                 int totalPrice = rs.getInt("totalprice");
 
+                List<Cupcake> listofCupcakes = new ArrayList<>();
+
                 listofCupcakes.add(new Cupcake(new Topping(toppingFlavor), new Bottom(bottomFlavor), priceEach, amount, totalPrice));
 
                 listOfAllOrders.add(new Order(orderId, userId, listofCupcakes));
@@ -48,8 +50,9 @@ public class OrderMapper {
     }
 
     public static List<Order> getAllOrders(ConnectionPool connectionPool) throws DatabaseException {
+
         List<Order> listOfAllOrders = new ArrayList<>();
-        List<Cupcake> listofCupcakes = new ArrayList<>();
+
         String sql = "SELECT public.order.order_id, public.order.user_id, bottom.flavor AS bottomflavor, topping.flavor AS toppingflavor," +
                 " cupcakedetail.price_each AS priceeach, cupcakedetail.amount AS amount, (price_each * amount) AS totalprice \n" +
                 "FROM public.order\n" +
@@ -72,6 +75,8 @@ public class OrderMapper {
                 int amount = rs.getInt("amount");
                 int totalPrice = rs.getInt("totalprice");
 
+                List<Cupcake> listofCupcakes = new ArrayList<>();
+
                 listofCupcakes.add(new Cupcake(new Topping(toppingFlavor), new Bottom(bottomFlavor), priceEach, amount, totalPrice));
 
                 listOfAllOrders.add(new Order(orderId, userId, listofCupcakes));
@@ -83,8 +88,8 @@ public class OrderMapper {
     }
 
     public static void deleteOrderLine(int orderId, ConnectionPool connectionPool) throws DatabaseException {
-            String sqlOrderLine = "DELETE FROM orderline WHERE order_id = ?";
-            String sqlOrder = "DELETE FROM public.order WHERE order_id = ?";
+        String sqlOrderLine = "DELETE FROM orderline WHERE order_id = ?";
+        String sqlOrder = "DELETE FROM public.order WHERE order_id = ?";
 
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement psDeleteOrderLines = connection.prepareStatement(sqlOrderLine);
