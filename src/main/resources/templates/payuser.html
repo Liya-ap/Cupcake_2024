@@ -1,36 +1,72 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Pay user</title>
+    <link href="/css/payuser-adminorder-customerorder.css" th:href="@{/css/payuser-adminorder-customerorder.css}"
+          rel="stylesheet"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Arizonia"/>
 </head>
+
 <body>
+<header>
+    <h1 style="font-family: 'Arizonia', sans-serif; background: url('/images/cupcakelogo.png') center no-repeat;">
+        Olsker Cupcakes
+    </h1>
+    <div class="menu-section">
+        <nav>
+            <div class="left-side">
+                <a class="menu-chosen" href="/templates/frontpage.html" th:href="@{/frontpage}"><i class="fa fa-home"
+                                                                                                   style="padding-right: 10px"></i>Home</a>
+                <a href=""><i class="fa fa-list-ul" style="padding-right: 10px"></i>
+                    <span><a href="/adminorder">All Orders</a></span>
+                </a>
+                <span><a href="/payuser"><i class="fa fa-users" style="padding-right: 10px"></i>Customers</a></span>
+            </div>
+        </nav>
+    </div>
+</header>
 
-<h1>Her kan admin overføre penge til user</h1>
+<div class="content-section">
+    <img src="/public/images/frontpage-bg-img.jpg" alt="Delicious Cupcakes" th:src="@{/images/frontpage-bg-img.jpg}">
 
-<table>
-    <thead>
-    <tr>
-        <th>User</th>
-        <th>Balance</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="user: ${userList}" th:if="${user.role == 'user'}">
-        <td th:text="${user.email}"></td>
-        <td th:text="${user.balance}"></td>
-        <td>
-            <form method="POST" th:action="@{/payuser}">
-                <input type="hidden" name="userId" th:value="${user.userid}"/>
-                <input type="hidden" name="balance" th:value="${user.balance}"/>
-                <input type="text" name="amount" placeholder="Enter amount"/>
-                <button type="submit">Add</button>
-            </form>
-        </td>
-    </tr>
-    </tbody>
-</table>
-<div><p th:text="${message}"></p></div>
+    <th:block>
+        <div class="content-display-container">
+            <div class="outer-border">
+                <table>
+                    <thead>
+                    <tr>
+                        <th>User</th>
+                        <th>Balance</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="user: ${userList}" th:if="${user.role == 'user'}">
+                        <td th:text="${user.email}"></td>
+                        <td th:text="${user.balance}"></td>
+                        <td>
+                            <form method="POST" th:action="@{/payuser}">
+                                <input type="hidden" name="userId" th:value="${user.userid}"/>
+                                <input type="hidden" name="balance" th:value="${user.balance}"/>
+                                <input type="text" name="amount" placeholder="Enter amount"/>
+                                <button type="submit">Add</button>
+                            </form>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <div><p th:text="${message}"></p></div>
+            </div>
+        </div>
+        <div class="footer">
+            <div>
+                <a class="log-out" href="/logout"><i class="fa fa-sign-out" style="padding-left: 10px">Log Out</i></a>
+            </div>
+        </div>
+    </th:block>
+</div>
 
 </body>
 </html>
