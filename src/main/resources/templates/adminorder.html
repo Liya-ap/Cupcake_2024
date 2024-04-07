@@ -1,65 +1,98 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Admin order</title>
+    <link href="/css/payuser-adminorder-customerorder.css" th:href="@{/css/payuser-adminorder-customerorder.css}"
+          rel="stylesheet"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Arizonia"/>
 </head>
 <body>
+<header>
+    <h1 style="font-family: 'Arizonia', sans-serif; background: url('/images/cupcakelogo.png') center no-repeat;">
+        Olsker Cupcakes
+    </h1>
+    <div class="menu-section">
+        <nav>
+            <div class="left-side">
+                <a class="menu-chosen" href="/templates/frontpage.html" th:href="@{/frontpage}"><i class="fa fa-home"
+                                                                                                   style="padding-right: 10px"></i>Home</a>
+                <a href=""><i class="fa fa-list-ul" style="padding-right: 10px"></i>
+                    <span><a href="/adminorder">All Orders</a></span>
+                </a>
+                <span><a href="/payuser"><i class="fa fa-users" style="padding-right: 10px"></i>Customers</a></span>
+            </div>
+        </nav>
+    </div>
+</header>
 
-<h1>Her er alle Ordrer</h1>
+<div class="content-section">
+    <img src="/public/images/frontpage-bg-img.jpg" alt="Delicious Cupcakes" th:src="@{/images/frontpage-bg-img.jpg}">
 
-<form method="POST">
-    <table>
-        <thead>
-        <tr>
-            <th>Order Number</th>
-            <th>User ID</th>
-            <th>Toppings</th>
-            <th>Bottoms</th>
-            <th>Amount</th>
-            <th>Price each</th>
-            <th>Total price</th>
-            <th>Action</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="order: ${listOfAllOrders}">
-            <td th:text="${order.orderId}"></td>
-            <td th:text="${order.userId}"></td>
-            <td>
+    <th:block>
+        <div class="content-display-container">
+            <div class="outer-border">
+                <form method="POST">
+                    <table>
+                        <thead>
+                        <tr>
+                            <th>Order Number</th>
+                            <th>User ID</th>
+                            <th>Toppings</th>
+                            <th>Bottoms</th>
+                            <th>Amount</th>
+                            <th>Price each</th>
+                            <th>Total price</th>
+                            <th>Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="order: ${listOfAllOrders}">
+                            <td th:text="${order.orderId}"></td>
+                            <td th:text="${order.userId}"></td>
+                            <td>
             <span th:each="cupcake: ${order.cupcakes}">
                 <span th:text="${cupcake.topping.flavor}"></span><br>
             </span>
-            </td>
-            <td>
+                            </td>
+                            <td>
             <span th:each="cupcake: ${order.cupcakes}">
                 <span th:text="${cupcake.bottom.flavor}"></span><br>
             </span>
-            </td>
-            <td>
+                            </td>
+                            <td>
             <span th:each="cupcake: ${order.cupcakes}">
                 <span th:text="${cupcake.amount}"></span><br>
             </span>
-            </td>
-            <td>
+                            </td>
+                            <td>
             <span th:each="cupcake: ${order.cupcakes}">
                 <span th:text="${cupcake.priceEach}"></span><br>
             </span>
-            </td>
-            <td>
+                            </td>
+                            <td>
             <span th:each="cupcake: ${order.cupcakes}">
                 <span th:text="${cupcake.totalprice}"></span><br>
             </span>
-            </td>
-            <td>
+                            </td>
+                            <td>
             <span th:each="cupcake: ${order.cupcakes}">
                     <button type="submit" name="orderId" th:value="${order.orderid}" formaction="deleteorder">Delete order</button>
             </span>
-            </td>
-        </tr>
-        </tbody>
-    </table>
-</form>
-
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </form>
+            </div>
+        </div>
+        <div class="footer">
+            <div>
+                <a class="log-out" href="/logout"><i class="fa fa-sign-out" style="padding-left: 10px">Log Out</i></a>
+            </div>
+        </div>
+    </th:block>
+</div>
 </body>
 </html>

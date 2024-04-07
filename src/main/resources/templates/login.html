@@ -1,29 +1,36 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-
-<title>Login Page</title>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link href="../public/css/loginstyle.css" th:href="@{/css/loginstyle.css}" rel="loginstylesheet"/>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <link href="/css/logincreateuserpagestyle.css" th:href="@{/css/logincreateuserpagestyle.css}" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Arizonia"/>
 </head>
 
 <body>
 <header>
-    <a href="/login.html" th:href="@{/}">
-        <img src="../public/images/cupcakelogo.png" th:src="@{/images/cupcakelogo.png}" width="35%"/>
-    </a>
+    <h1 style="font-family: 'Arizonia', sans-serif; background: url('/images/cupcakelogo.png') center no-repeat;">
+        Olsker Cupcakes
+    </h1>
 </header>
 
-<p>Please login:</p>
-
-<form method="POST">
-    <input type="text" name="email" placeholder="Enter your email"/>
-    <input type="password" name="password" placeholder="Enter your password"/>
-    <button type="submit" formaction="/login">Login</button>
-    <div><p th:text="${message}"></p></div>
-</form>
-
-<p> <a href="createuser.html" th:href="@{/createuser}">Create user</a> </p>
-
+<div class="content-section">
+    <img src="/public/images/frontpage-bg-img.jpg" alt="Delicious Cupcakes" th:src="@{/images/frontpage-bg-img.jpg}">
+    <th:block>
+        <div class="content-display-container">
+            <div class="flex-item">
+                <h2 class="header-text">Login</h2>
+                <form class="generic-form" method="POST">
+                    <input type="text" name="email" placeholder="Enter your email"/>
+                    <input type="password" name="password" placeholder="Enter your password"/>
+                    <button type="submit" formaction="/login">Login</button>
+                    <div style="font-weight: bolder"><p th:text="${message}"></p></div>
+                    <p>Don't have an account? <a href="createuser.html" th:href="@{/createuser}">Create user</a></p>
+                </form>
+            </div>
+        </div>
+    </th:block>
+</div>
 </body>
 </html>
