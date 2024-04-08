@@ -173,7 +173,7 @@ p {
     display: flex;
     flex-direction: column;
     align-items: center;
-
+    overflow-y: auto;
     position: absolute;
     width: 90%;
     height: 90%;
