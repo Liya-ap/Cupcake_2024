@@ -3,6 +3,7 @@
   <component name="SqlDialectMappings">
     <file url="file://$PROJECT_DIR$/src/main/java/app/persistence/BasketMapper.java" dialect="PostgreSQL" />
     <file url="file://$PROJECT_DIR$/src/main/java/app/persistence/CupcakeMapper.java" dialect="PostgreSQL" />
+    <file url="file://$PROJECT_DIR$/src/main/java/app/persistence/OrderMapper.java" dialect="PostgreSQL" />
     <file url="file://$PROJECT_DIR$/src/main/java/app/persistence/UserMapper.java" dialect="PostgreSQL" />
     <file url="file://$PROJECT_DIR$/src/main/resources/sql/cupcake_script_plain_db.sql" dialect="PostgreSQL" />
   </component>
