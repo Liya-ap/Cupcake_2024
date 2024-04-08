@@ -6,6 +6,8 @@ import app.exceptions.DatabaseException;
 import app.persistence.BasketMapper;
 import app.persistence.ConnectionPool;
 import app.persistence.CupcakeMapper;
+import app.persistence.UserMapper;
+import app.validators.PayUserValidate;
 import io.javalin.Javalin;
 import io.javalin.http.Context;
 import java.util.ArrayList;
@@ -62,13 +64,18 @@ public class BasketController {
      */
     public static void purchaseCupcakes(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
         User currentUser = ctx.sessionAttribute("currentUser");
-        int orderID = createOrder(connectionPool, currentUser);
-        createOrdelines(connectionPool, orderID, currentUser);
-        int totalPrice = getTotalPriceForBasket(ctx);
-        currentUser.setBalance(totalPrice);
+        int totalPrice = -1 * getTotalPriceForBasket(ctx);
 
-        ctx.attribute("orderNumber", orderID);
-        ctx.attribute("purchased", true);
+        if (PayUserValidate.isValidPayment(totalPrice, currentUser.getBalance())) {
+            int orderID = createOrder(connectionPool, currentUser);
+            createOrdelines(connectionPool, orderID, currentUser);
+            UserMapper.setUserBalance(totalPrice, currentUser.getUserId(), connectionPool);
+            ctx.attribute("orderNumber", orderID);
+            ctx.attribute("purchased", true);
+        } else {
+            ctx.attribute("purchased", false);
+            ctx.attribute("currentUserBalance",currentUser.getBalance());
+        }
     }
 
     /**
