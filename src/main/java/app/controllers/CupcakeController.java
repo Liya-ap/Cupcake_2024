@@ -14,31 +14,29 @@ import java.util.List;
 public class CupcakeController {
 
     public static void addRoutes(Javalin app, ConnectionPool connectionPool){
-        app.get("/frontpage", ctx -> displayFrontPage(ctx, connectionPool));
+        app.get("/homepage", ctx -> displayHomePage(ctx, connectionPool));
 
         app.post("/addCupcake", ctx -> {
             addCupcakeToBasket(ctx, connectionPool);
-            displayFrontPage(ctx, connectionPool);
+            displayHomePage(ctx, connectionPool);
         });
-
-        app.get("/logout", ctx -> logout(ctx));
     }
 
     /**
-     * Renders the frontpage after login
+     * Renders the homepage after login
      * Gets all necessary data from database to be displayed on page
      * @param ctx Context parameter used to obtain information related to the page
      * @param connectionPool ConnectionPool used to retrieve cupcake topping, bottom and amount data from database
      * @throws DatabaseException Throws exception if database connection/sql fails
      */
-    private static void displayFrontPage(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
+    private static void displayHomePage(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
         User currentUser = ctx.sessionAttribute("currentUser");
         ctx.attribute("currentUserEmail", currentUser.getEmail());
         getAllToppings(ctx, connectionPool);
         getAllBottoms(ctx, connectionPool);
         getAmountOfCupcakesInBasket(ctx, connectionPool);
 
-        ctx.render("frontpage.html");
+        ctx.render("home-page.html");
     }
 
     /**
@@ -96,7 +94,7 @@ public class CupcakeController {
     }
 
     /**
-     * Used to show the number of items in current user's basket from the frontpage
+     * Used to show the number of items in current user's basket from the homepage
      * @param ctx Context parameter used to get the current user and to make he number of cupcakes retrievable
      * @param connectionPool ConnectionPool used to get all cupcakes in current user's basket from database
      * @throws DatabaseException Throws exception if database connection/sql fails
@@ -111,17 +109,6 @@ public class CupcakeController {
         }
 
         ctx.attribute("amountInBasket", totalAmount);
-    }
-
-    /**
-     * Returns to the login page
-     * Logs out/invalidates the current session user
-     * @param ctx Context parameter used to get session user and invalidates it
-     */
-    private static void logout(Context ctx)
-    {
-        ctx.req().getSession().invalidate();
-        ctx.redirect("/");
     }
 
 }

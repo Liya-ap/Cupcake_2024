@@ -13,37 +13,37 @@ import java.util.List;
 public class OrderController {
 
     public static void addRoutes(Javalin app, ConnectionPool connectionPool) {
-        app.get("customerorder", ctx -> displayCustomerOrders(ctx, connectionPool));
-        app.get("adminorder", ctx -> displayAdminOrders(ctx, connectionPool));
-        app.post("deleteorder", ctx -> deleteOrder(ctx, connectionPool));
+        app.get("/customerorder", ctx -> displayCurrentCustomersOrderHistory(ctx, connectionPool));
+        app.get("/adminorder", ctx -> displayAllCustomerOrderHistories(ctx, connectionPool));
+
+        app.post("/deleteorder", ctx -> {
+            deleteOrder(ctx, connectionPool);
+            displayAllCustomerOrderHistories(ctx, connectionPool);
+        });
     }
 
-    private static void displayCustomerOrders(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
+    private static void displayCurrentCustomersOrderHistory(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
         User currentUser = ctx.sessionAttribute("currentUser");
         ctx.attribute("currentUserEmail", currentUser.getEmail());
         CupcakeController.getAmountOfCupcakesInBasket(ctx, connectionPool);
-        List<Order> listOfOrders = OrderMapper.getAllUserOrders(currentUser.getUserId(), connectionPool);
+        List<Order> listOfOrders = OrderMapper.getACustomersOrders(currentUser.getUserID(), connectionPool);
         ctx.attribute("listOfOrders", listOfOrders);
-        ctx.render("customerorder.html");
+
+        ctx.render("customer/myOrders-page.html");
     }
 
-    private static void displayAdminOrders(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
+    private static void displayAllCustomerOrderHistories(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
         User currentUser = ctx.sessionAttribute("currentUser");
         ctx.attribute("currentUserEmail", currentUser.getEmail());
-        List<Order> cupcakes = OrderMapper.getAllOrders(connectionPool);
-        ctx.attribute("listOfAllOrders", cupcakes);
-        ctx.render("adminorder.html");
+        List<Order> listOfAllOrders = OrderMapper.getAllOrders(connectionPool);
+        ctx.attribute("listOfAllOrders", listOfAllOrders);
+
+        ctx.render("admin/allOrders-page.html");
     }
 
     private static void deleteOrder(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
-
         int orderId = Integer.parseInt(ctx.formParam("orderId"));
-
-        OrderMapper.deleteOrderLine(orderId, connectionPool);
-
-        List<Order> listOfAllOrders = OrderMapper.getAllOrders(connectionPool);
-        ctx.attribute("listOfAllOrders", listOfAllOrders);
-        ctx.render("adminorder.html");
+        OrderMapper.deleteOrder(orderId, connectionPool);
     }
 }
 

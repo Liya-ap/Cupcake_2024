@@ -1,6 +1,6 @@
 package app.validators;
 
-public class PayUserValidate {
+public class PayUserValidator {
     public static boolean isValidInput(String payment) {
         try {
             Integer.parseInt(payment);

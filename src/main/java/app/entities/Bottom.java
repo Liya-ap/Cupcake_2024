@@ -1,7 +1,6 @@
 package app.entities;
 
 public class Bottom {
-
     private int bottomID;
     private String flavor;
     private int price;
@@ -14,8 +13,6 @@ public class Bottom {
         this.bottomID = bottomID;
         this.flavor = flavor;
         this.price = price;
-
-
     }
 
     public int getBottomID() {

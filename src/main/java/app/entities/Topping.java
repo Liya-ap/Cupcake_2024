@@ -1,7 +1,6 @@
 package app.entities;
 
 public class Topping {
-
     private int toppingID;
     private String flavor;
     private int price;

@@ -7,10 +7,10 @@
           rel="stylesheet"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Arizonia"/>
+    <link href="/css/generalpagestyle.css" th:href="@{/css/generalpagestyle.css}" rel="stylesheet">
 </head>
 
 <body>
-
 <header>
     <h1 style="font-family: 'Arizonia', sans-serif; background: url('/images/cupcakelogo.png') center no-repeat;">
         Olsker Cupcakes
@@ -18,19 +18,19 @@
     <div class="menu-section">
         <nav>
             <div class="left-side">
-                <a href="/templates/frontpage.html" th:href="@{/frontpage}"><i class="fa fa-home" style="padding-right: 10px"></i>Home</a>
-                <span th:if="${#ctx.session.currentUser.role == 'user'}"><a href="/templates/customerorder.html" th:href="@{/customerorder}">
+                <a href="/templates/home-page.html" th:href="@{/homepage}"><i class="fa fa-home" style="padding-right: 10px"></i>Home</a>
+                <span th:if="${#ctx.session.currentUser.role == 'user'}"><a href="/templates/customer/myOrders-page.html" th:href="@{/customerorder}">
                         <i class="fa fa-list-ul" style="padding-right: 10px"></i>My Orders</a>
                     </span>
-                <span th:if="${#ctx.session.currentUser.role == 'admin'}"><a href="/templates/adminorder.html" th:href="@{/adminorder}">
+                <span th:if="${#ctx.session.currentUser.role == 'admin'}"><a href="/templates/admin/allOrders-page.html" th:href="@{/adminorder}">
                         <i class="fa fa-list-ul" style="padding-right: 10px"></i>All Orders</a></span>
-                <span th:if="${#ctx.session.currentUser.role == 'admin'}"><a class="menu-chosen" href="/templates/payuser.html" th:href="@{/payuser}">
+                <span th:if="${#ctx.session.currentUser.role == 'admin'}"><a class="menu-chosen" href="/templates/admin/userbalances-page.html" th:href="@{/payuser}">
                     <i class="fa fa-users" style="padding-right: 10px"></i>Customers</a></span>
             </div>
             <div class="right-side">
                     <span th:if="${#ctx.session.currentUser.role == 'user'}">
-                        <a class="basket" href="/templates/basketpage.html" th:href="@{/yourBasket}">
-                            <i class="fa" style="font-size:50px;">&#xf07a;</i>
+                        <a class="basket" href="/templates/customer/basket-page.html" th:href="@{/yourBasket}">
+                            <i class="fa" style="font-size:30px;">&#xf07a;</i>
                             <span class='badge' id='lblCartCount' th:text="${amountInBasket}">0</span>
                         </a>
                     </span>
@@ -40,11 +40,11 @@
 </header>
 
 <div class="content-section">
-    <img src="/public/images/frontpage-bg-img.jpg" alt="Delicious Cupcakes" th:src="@{/images/frontpage-bg-img.jpg}">
+    <img src="/images/homepage-bg-img.jpg" alt="Delicious Cupcakes" th:src="@{/images/homepage-bg-img.jpg}">
 
     <th:block>
         <div class="content-display-container">
-            <div class="outer-border">
+            <div class="outer-border-table">
                 <table>
                     <thead>
                     <tr>

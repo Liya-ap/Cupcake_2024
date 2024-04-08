@@ -6,26 +6,15 @@ public class Cupcake {
     private Bottom bottom;
     private int amount;
     private int priceEach;
-    private int totalprice;
+    private int totalPrice;
 
-    public Cupcake() {}
-
-    public Cupcake(Topping topping, Bottom bottom, int amount, int priceEach, int totalprice) {
-        this.topping = topping;
-        this.bottom = bottom;
-        this.amount = amount;
-        this.priceEach = priceEach;
-        this.totalprice = totalprice;
-    }
-
-    public Cupcake(int cupcakeID, Topping topping, Bottom bottom, int amount, int priceEach) {
+    public Cupcake(int cupcakeID, Topping topping, Bottom bottom, int amount, int priceEach, int totalPrice) {
         this.cupcakeID = cupcakeID;
         this.topping = topping;
         this.bottom = bottom;
         this.amount = amount;
         this.priceEach = priceEach;
-
-
+        this.totalPrice = totalPrice;
     }
 
     public int getCupcakeID() {
@@ -68,12 +57,12 @@ public class Cupcake {
         this.priceEach = priceEach;
     }
 
-    public int getTotalprice() {
-        return totalprice;
+    public int getTotalPrice() {
+        return totalPrice;
     }
 
-    public void setTotalprice(int totalprice) {
-        this.totalprice = totalprice;
+    public void setTotalPrice(int totalPrice) {
+        this.totalPrice = totalPrice;
     }
 
     @Override

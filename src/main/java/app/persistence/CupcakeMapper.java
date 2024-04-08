@@ -5,6 +5,7 @@ import app.entities.Cupcake;
 import app.entities.Topping;
 import app.entities.User;
 import app.exceptions.DatabaseException;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -16,7 +17,8 @@ public class CupcakeMapper {
 
     /**
      * Gets a single topping object (flavor, price) from the database table topping from a given flavor
-     * @param toppingFlavor The chosen topping flavor
+     *
+     * @param toppingFlavor  The chosen topping flavor
      * @param connectionPool ConnectionPool used to execute sql for retrieving specific topping
      * @return Topping object with String flavor and int price
      * @throws DatabaseException Displays "Failed at getting a topping" + system msg
@@ -37,7 +39,7 @@ public class CupcakeMapper {
                 String flavor = rs.getString("flavor");
                 int price = rs.getInt("price");
 
-                 chosenTopping = new Topping(toppingID, flavor, price);
+                chosenTopping = new Topping(toppingID, flavor, price);
             }
         } catch (SQLException e) {
             throw new DatabaseException("Failed at getting a topping", e.getMessage());
@@ -47,6 +49,7 @@ public class CupcakeMapper {
 
     /**
      * Gets all the topping objects (id, flavor, price) from the database table topping and returns a List of Toppings
+     *
      * @param connectionPool ConnectionPool used to execute sql for selecting all toppings
      * @return List of objects of type Topping
      * @throws DatabaseException Displays "Failed at getting all toppings" + system msg
@@ -76,7 +79,8 @@ public class CupcakeMapper {
 
     /**
      * Gets a single bottom object (flavor, price) from the database table bottom from given flavor
-     * @param bottomFlavor The chosen bottom flavor
+     *
+     * @param bottomFlavor   The chosen bottom flavor
      * @param connectionPool ConnectionPool used to execute sql for retrieving specific bottom flavor
      * @return Bottom object with String flavor and int price
      * @throws DatabaseException Displays "Failed at getting a bottom" + system msg
@@ -107,6 +111,7 @@ public class CupcakeMapper {
 
     /**
      * Gets all the bottom objects (id, flavor, price) from the database table bottom and returns a List of Bottoms
+     *
      * @param connectionPool ConnectionPool used to execute sql for selecting all bottoms
      * @return List of objects of type Bottom
      * @throws DatabaseException Displays "Failed at getting all bottoms" + system msg
@@ -135,10 +140,11 @@ public class CupcakeMapper {
 
     /**
      * Inserts a cupcake into the table cupcakedetail from the given parameters and returns the cupcakedetail_id that was created
-     * @param toppingID Chosen topping id
-     * @param bottomID Chosen bottom id
-     * @param amount Amount of the chosen cupcake
-     * @param priceEach Price individually for the chosen cupcake
+     *
+     * @param toppingID      Chosen topping id
+     * @param bottomID       Chosen bottom id
+     * @param amount         Amount of the chosen cupcake
+     * @param priceEach      Price individually for the chosen cupcake
      * @param connectionPool ConnectionPool used to execute sql for inserting cupcake and getting an id
      * @return The created cupcake's id
      * @throws DatabaseException Displays "Failed at creating a cupcake" + system msg
@@ -168,9 +174,10 @@ public class CupcakeMapper {
 
     /**
      * Adds the user's chosen cupcake to user's basket
+     *
      * @param cupcakeDetailID The chosen cupcake's id
-     * @param user the current user that added the cupcake
-     * @param connectionPool ConnectionPool used to insert cupcake id in database table basket
+     * @param user            the current user that added the cupcake
+     * @param connectionPool  ConnectionPool used to insert cupcake id in database table basket
      * @throws DatabaseException Displays "Failed at adding cupcake to basket" + system msg
      */
     public static void addToBasket(int cupcakeDetailID, User user, ConnectionPool connectionPool) throws DatabaseException {
@@ -181,7 +188,7 @@ public class CupcakeMapper {
                 PreparedStatement ps = connection.prepareStatement(sql)
         ) {
             ps.setInt(1, cupcakeDetailID);
-            ps.setInt(2, user.getUserId());
+            ps.setInt(2, user.getUserID());
             ps.executeUpdate();
         } catch (SQLException e) {
             throw new DatabaseException("Failed at adding cupcake to basket", e.getMessage());
@@ -191,7 +198,8 @@ public class CupcakeMapper {
     /**
      * Gets all the relevant information for all the cupcake's in a current user's basket
      * Returns a List of cupcake objects
-     * @param user the current user
+     *
+     * @param user           the current user
      * @param connectionPool ConnectionPool used execute sql for selecting relevant values from database
      * @return List of all cupcake objects in a current user's basket
      * @throws DatabaseException Displays "Failed at getting all cupcakes in basket" + system msg
@@ -210,7 +218,7 @@ public class CupcakeMapper {
                 Connection connection = connectionPool.getConnection();
                 PreparedStatement ps = connection.prepareStatement(sql)
         ) {
-            ps.setInt(1, user.getUserId());
+            ps.setInt(1, user.getUserID());
 
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
@@ -229,7 +237,7 @@ public class CupcakeMapper {
                 int amount = rs.getInt("amount");
                 int priceEach = rs.getInt("price_each");
 
-                allCupcakesInBasket.add(new Cupcake(cupcakeID, topping, bottom, amount, priceEach));
+                allCupcakesInBasket.add(new Cupcake(cupcakeID, topping, bottom, amount, priceEach, amount * priceEach));
             }
 
         } catch (SQLException e) {

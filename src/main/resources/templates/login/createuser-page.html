@@ -16,8 +16,8 @@
 </header>
 
 <div class="content-section">
-    <img src="/public/images/frontpage-bg-img.jpg" alt="Delicious Cupcakes"
-         th:src="@{/images/frontpage-bg-img.jpg}">
+    <img src="/images/homepage-bg-img.jpg" alt="Delicious Cupcakes"
+         th:src="@{/images/homepage-bg-img.jpg}">
     <th:block>
         <div class="content-display-container">
             <div class="flex-item">
@@ -28,7 +28,7 @@
                     <input type="password" name="password2" placeholder="Enter your password again"/>
                     <button type="submit" formaction="/createuser">Create user</button>
                     <div style="font-weight: bolder"><p th:text="${message}"></p></div>
-                    <p>Already have an account? <a href="login.html" th:href="@{/}">Sign in</a></p>
+                    <p>Already have an account? <a href="login-page.html" th:href="@{/}">Sign in</a></p>
                 </form>
             </div>
         </div>

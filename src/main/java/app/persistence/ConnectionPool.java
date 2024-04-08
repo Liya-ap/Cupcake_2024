@@ -11,8 +11,7 @@ import java.util.logging.Logger;
 /***
  * Singleton pattern applied to handling a Hikari ConnectionPool
  */
-public class ConnectionPool
-{
+public class ConnectionPool {
     private static final String USER = "postgres";
     private static final String PASSWORD = "postgres";
     private static final String URL = "jdbc:postgresql://localhost:5432/%s?currentSchema=public";
@@ -25,8 +24,7 @@ public class ConnectionPool
      * Empty and private constructor due to single pattern. Use getInstance methods to
      * instantiate and get a connection pool.
      */
-    private ConnectionPool()
-    {
+    private ConnectionPool() {
     }
 
     public static ConnectionPool getInstance() {
@@ -43,19 +41,15 @@ public class ConnectionPool
      * @param db database name for connection
      * @return A ConnectionPool object
      */
-    public static ConnectionPool getInstance(String user, String password, String url, String db)
-    {
-        if (instance == null)
-        {
-            if (System.getenv("DEPLOYED") != null)
-            {
+    public static ConnectionPool getInstance(String user, String password, String url, String db) {
+        if (instance == null) {
+            if (System.getenv("DEPLOYED") != null) {
                 ds = createHikariConnectionPool(
                         System.getenv("JDBC_USER"),
                         System.getenv("JDBC_PASSWORD"),
                         System.getenv("JDBC_CONNECTION_STRING_STARTCODE"),
                         System.getenv("JDBC_DB"));
-            } else
-            {
+            } else {
                 ds = createHikariConnectionPool(user, password, url, db);
             }
             instance = new ConnectionPool();
@@ -68,16 +62,14 @@ public class ConnectionPool
      * @return a database connection to be used in sql requests
      * @throws SQLException
      */
-    public synchronized Connection getConnection() throws SQLException
-    {
+    public synchronized Connection getConnection() throws SQLException {
         return ds.getConnection();
     }
 
     /***
      * Closing a Hikari Connection Pool after use.
      */
-    public synchronized void close()
-    {
+    public synchronized void close() {
         Logger.getLogger("web").log(Level.INFO, "Shutting down connection pool");
         ds.close();
     }
@@ -90,8 +82,7 @@ public class ConnectionPool
      * @param db database name for connection
      * @return a Hikari DataSource
      */
-    private static HikariDataSource createHikariConnectionPool(String user, String password, String url, String db)
-    {
+    private static HikariDataSource createHikariConnectionPool(String user, String password, String url, String db) {
         Logger.getLogger("web").log(Level.INFO,
                 String.format("Connection Pool created for: (%s, %s, %s, %s)", user, password, url, db));
         HikariConfig config = new HikariConfig();
