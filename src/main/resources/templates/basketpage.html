@@ -130,6 +130,26 @@
                 </div>
             </div>
         </div>
+        <div th:if="${purchased} == false">
+            <div class="no-form">
+                <div class="outer-border-basket">
+                    <div class="basket-header">
+                        <h5>Cupcakes in your basket:</h5>
+                    </div>
+
+                    <div class="cupcakes-content">
+                        <div class="display-single-item">
+                            <div class="single-item-content">
+                                <h6 style="font-size: 1.6em;">Insufficient funds: order cancelled.</h6>
+                                <h6 style="font-size: 1.6em;">Your current balance is: <span th:text="${currentUserBalance}"></span> kr.</h6>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="basket-footer"></div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <div class="footer">

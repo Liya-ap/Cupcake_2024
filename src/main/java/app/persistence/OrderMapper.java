@@ -53,14 +53,13 @@ public class OrderMapper {
 
         List<Order> listOfAllOrders = new ArrayList<>();
 
-        String sql = "SELECT public.order.order_id, public.order.user_id, bottom.flavor AS bottomflavor, topping.flavor AS toppingflavor," +
-                " cupcakedetail.price_each AS priceeach, cupcakedetail.amount AS amount, (price_each * amount) AS totalprice \n" +
+        String sql = "SELECT public.order.order_id, users.email, bottom.flavor AS bottomflavor, topping.flavor AS toppingflavor, cupcakedetail.price_each AS priceeach, cupcakedetail.amount AS amount, (price_each * amount) AS totalprice\n" +
                 "FROM public.order\n" +
                 "INNER JOIN public.orderline ON public.order.order_id = orderline.order_id\n" +
                 "INNER JOIN users ON public.order.user_id = users.user_id\n" +
                 "INNER JOIN cupcakedetail ON orderline.cupcakedetail_id = cupcakedetail.cupcakedetail_id\n" +
                 "INNER JOIN bottom ON cupcakedetail.bottom_id = bottom.bottom_id\n" +
-                "INNER JOIN topping ON cupcakedetail.topping_id = topping.topping_id\n";
+                "INNER JOIN topping ON cupcakedetail.topping_id = topping.topping_id";
         try (
                 Connection connection = connectionPool.getConnection();
                 PreparedStatement ps = connection.prepareStatement(sql)
@@ -68,18 +67,20 @@ public class OrderMapper {
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 int orderId = rs.getInt("order_id");
-                int userId = rs.getInt("user_id");
+                String email = rs.getString("email");
                 String bottomFlavor = rs.getString("bottomflavor");
                 String toppingFlavor = rs.getString("toppingflavor");
                 int priceEach = rs.getInt("priceeach");
                 int amount = rs.getInt("amount");
                 int totalPrice = rs.getInt("totalprice");
 
+
+
                 List<Cupcake> listofCupcakes = new ArrayList<>();
 
                 listofCupcakes.add(new Cupcake(new Topping(toppingFlavor), new Bottom(bottomFlavor), priceEach, amount, totalPrice));
 
-                listOfAllOrders.add(new Order(orderId, userId, listofCupcakes));
+                listOfAllOrders.add(new Order(orderId, email, listofCupcakes));
             }
         } catch (SQLException e) {
             throw new DatabaseException("Fejl i SQL!!", e.getMessage());
