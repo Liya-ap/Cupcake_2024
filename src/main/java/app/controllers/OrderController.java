@@ -19,13 +19,17 @@ public class OrderController {
     }
 
     private static void displayCustomerOrders(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
-        User user = ctx.sessionAttribute("currentUser");
-        List<Order> listOfOrders = OrderMapper.getAllUserOrders(user.getUserId(), connectionPool);
+        User currentUser = ctx.sessionAttribute("currentUser");
+        ctx.attribute("currentUserEmail", currentUser.getEmail());
+        CupcakeController.getAmountOfCupcakesInBasket(ctx, connectionPool);
+        List<Order> listOfOrders = OrderMapper.getAllUserOrders(currentUser.getUserId(), connectionPool);
         ctx.attribute("listOfOrders", listOfOrders);
         ctx.render("customerorder.html");
     }
 
     private static void displayAdminOrders(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
+        User currentUser = ctx.sessionAttribute("currentUser");
+        ctx.attribute("currentUserEmail", currentUser.getEmail());
         List<Order> cupcakes = OrderMapper.getAllOrders(connectionPool);
         ctx.attribute("listOfAllOrders", cupcakes);
         ctx.render("adminorder.html");

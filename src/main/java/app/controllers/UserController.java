@@ -25,6 +25,8 @@ public class UserController {
     }
 
     private static void displayPayUser(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
+        User currentUser = ctx.sessionAttribute("currentUser");
+        ctx.attribute("currentUserEmail", currentUser.getEmail());
         List<User> userList = UserMapper.getAllUsers(connectionPool);
         ctx.attribute("userList", userList);
         ctx.render("payuser.html");

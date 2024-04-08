@@ -8,6 +8,7 @@ object Basket
 object System
 
 Customer o-- Order
+Customer *-- Basket
 Order *-- OrderLine
 OrderLine *-- Cupcake
 Basket o-- OrderLine

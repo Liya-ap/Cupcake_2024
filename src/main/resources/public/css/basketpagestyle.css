@@ -171,4 +171,16 @@ h6 {
     .total-price {
         font-size: 2em;
     }
+
+    /*----------------------------------------- MEDIA ------------------------------------------------------------------*/
+    /* If the screen size is 1150px wide or less*/
+    @media screen and (max-width: 800px) {
+        h5 {
+            font-size: 1.8em;
+        }
+
+        .total-price {
+            font-size:1.5em
+        }
+    }
 }
