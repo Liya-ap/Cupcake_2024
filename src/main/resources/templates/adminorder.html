@@ -38,7 +38,7 @@
                         <thead>
                         <tr>
                             <th>Order Number</th>
-                            <th>User ID</th>
+                            <th>Email</th>
                             <th>Toppings</th>
                             <th>Bottoms</th>
                             <th>Amount</th>
@@ -50,7 +50,7 @@
                         <tbody>
                         <tr th:each="order: ${listOfAllOrders}">
                             <td th:text="${order.orderId}"></td>
-                            <td th:text="${order.userId}"></td>
+                            <td th:text="${order.email}"></td>
                             <td>
             <span th:each="cupcake: ${order.cupcakes}">
                 <span th:text="${cupcake.topping.flavor}"></span><br>
