@@ -18,6 +18,7 @@ public class Main {
             config.fileRenderer(new JavalinThymeleaf(ThymeleafConfig.templateEngine()));
         }).start(7070);
 
+
         // Routing here:
         UserController.addRoutes(app, ConnectionPool.getInstance());
         CupcakeController.addRoutes(app, ConnectionPool.getInstance());

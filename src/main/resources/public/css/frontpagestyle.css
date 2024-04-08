@@ -351,3 +351,24 @@ p {
         font-size: 1em;
     }
 }
+
+/*----------------------------------------- MEDIA ------------------------------------------------------------------*/
+/* If the screen size is 1150px wide or less*/
+@media screen and (max-width: 800px) {
+    h3 {
+        font-size: 1.2em;
+    }
+
+    #topping, #bottom, #amount {
+        font-size: 0.5em;
+        padding: 0;
+    }
+
+    .add-button {
+        font-size: 0.5em;
+        height: 80%;
+        width: 20%;
+        margin-right: 2px;
+    }
+
+}

@@ -40,20 +40,19 @@ ALTER TABLE IF EXISTS public."order" ALTER COLUMN order_id DROP DEFAULT;
 ALTER TABLE IF EXISTS public.cupcakedetail ALTER COLUMN cupcakedetail_id DROP DEFAULT;
 ALTER TABLE IF EXISTS public.bottom ALTER COLUMN bottom_id DROP DEFAULT;
 ALTER TABLE IF EXISTS public.basket ALTER COLUMN basket_id DROP DEFAULT;
-DROP SEQUENCE IF EXISTS public.users_user_id_seq;
-DROP TABLE IF EXISTS public.users;
-DROP SEQUENCE IF EXISTS public.topping_topping_id_seq;
-DROP TABLE IF EXISTS public.topping;
-DROP TABLE IF EXISTS public.orderline;
-DROP SEQUENCE IF EXISTS public.cupcakedetail_cupcakedetail_id_seq;
-DROP SEQUENCE IF EXISTS public.order_order_id_seq;
-DROP TABLE IF EXISTS public."order";
-DROP TABLE IF EXISTS public.cupcakedetail;
-DROP SEQUENCE IF EXISTS public.bottom_bottom_id_seq;
-DROP TABLE IF EXISTS public.bottom;
-DROP SEQUENCE IF EXISTS public.basket_basket_id_seq;
-DROP TABLE IF EXISTS public.basket;
-DROP SCHEMA IF EXISTS public;
+DROP SEQUENCE IF EXISTS public.users_user_id_seq CASCADE ;
+DROP TABLE IF EXISTS public.users CASCADE;
+DROP SEQUENCE IF EXISTS public.topping_topping_id_seq CASCADE;
+DROP TABLE IF EXISTS public.topping CASCADE;
+DROP TABLE IF EXISTS public.orderline CASCADE;
+DROP SEQUENCE IF EXISTS public.cupcakedetail_cupcakedetail_id_seq CASCADE;
+DROP SEQUENCE IF EXISTS public.order_order_id_seq CASCADE;
+DROP TABLE IF EXISTS public."order" CASCADE;
+DROP TABLE IF EXISTS public.cupcakedetail CASCADE;
+DROP SEQUENCE IF EXISTS public.bottom_bottom_id_seq CASCADE;
+DROP TABLE IF EXISTS public.bottom CASCADE;
+DROP SEQUENCE IF EXISTS public.basket_basket_id_seq CASCADE;
+DROP TABLE IF EXISTS public.basket CASCADE;
 --
 -- TOC entry 5 (class 2615 OID 41330)
 -- Name: public; Type: SCHEMA; Schema: -; Owner: pg_database_owner
@@ -615,7 +614,7 @@ ALTER TABLE ONLY public.orderline
 
 --
 -- TOC entry 3264 (class 2606 OID 41406)
--- Name: orderline foreignkey_orderdetail_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: orderline foreignkey_cupcakedetail_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public.orderline

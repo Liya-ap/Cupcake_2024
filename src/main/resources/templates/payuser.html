@@ -10,6 +10,7 @@
 </head>
 
 <body>
+
 <header>
     <h1 style="font-family: 'Arizonia', sans-serif; background: url('/images/cupcakelogo.png') center no-repeat;">
         Olsker Cupcakes
@@ -17,12 +18,22 @@
     <div class="menu-section">
         <nav>
             <div class="left-side">
-                <a class="menu-chosen" href="/templates/frontpage.html" th:href="@{/frontpage}"><i class="fa fa-home"
-                                                                                                   style="padding-right: 10px"></i>Home</a>
-                <a href=""><i class="fa fa-list-ul" style="padding-right: 10px"></i>
-                    <span><a href="/adminorder">All Orders</a></span>
-                </a>
-                <span><a href="/payuser"><i class="fa fa-users" style="padding-right: 10px"></i>Customers</a></span>
+                <a href="/templates/frontpage.html" th:href="@{/frontpage}"><i class="fa fa-home" style="padding-right: 10px"></i>Home</a>
+                <span th:if="${#ctx.session.currentUser.role == 'user'}"><a href="/templates/customerorder.html" th:href="@{/customerorder}">
+                        <i class="fa fa-list-ul" style="padding-right: 10px"></i>My Orders</a>
+                    </span>
+                <span th:if="${#ctx.session.currentUser.role == 'admin'}"><a href="/templates/adminorder.html" th:href="@{/adminorder}">
+                        <i class="fa fa-list-ul" style="padding-right: 10px"></i>All Orders</a></span>
+                <span th:if="${#ctx.session.currentUser.role == 'admin'}"><a class="menu-chosen" href="/templates/payuser.html" th:href="@{/payuser}">
+                    <i class="fa fa-users" style="padding-right: 10px"></i>Customers</a></span>
+            </div>
+            <div class="right-side">
+                    <span th:if="${#ctx.session.currentUser.role == 'user'}">
+                        <a class="basket" href="/templates/basketpage.html" th:href="@{/yourBasket}">
+                            <i class="fa" style="font-size:50px;">&#xf07a;</i>
+                            <span class='badge' id='lblCartCount' th:text="${amountInBasket}">0</span>
+                        </a>
+                    </span>
             </div>
         </nav>
     </div>
@@ -61,7 +72,10 @@
             </div>
         </div>
         <div class="footer">
-            <div>
+            <div class="left-side">
+                <h2>Logged in with: <span class="email" th:text="${currentUserEmail}"></span></h2>
+            </div>
+            <div class="right-side">
                 <a class="log-out" href="/logout"><i class="fa fa-sign-out" style="padding-left: 10px">Log Out</i></a>
             </div>
         </div>

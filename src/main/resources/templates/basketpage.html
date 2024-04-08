@@ -8,8 +8,8 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Arizonia"/>
     <link href="/public/css/frontpagestyle.css" th:href="@{/css/frontpagestyle.css}" rel="stylesheet"/>
 </head>
-<body>
 
+<body>
 <header>
     <h1 style="font-family: 'Arizonia', sans-serif; background: url('/images/cupcakelogo.png') center no-repeat;">
         Olsker Cupcakes
@@ -17,14 +17,14 @@
     <div class="menu-section">
         <nav>
             <div class="left-side">
-                <a class="menu-chosen" href="/templates/frontpage.html" th:href="@{/frontpage}"><i class="fa fa-home"
-                                                                                                   style="padding-right: 10px"></i>Home</a>
-                <a href=""><i class="fa fa-list-ul" style="padding-right: 10px"></i>
-                    <span th:if="${#ctx.session.currentUser.role == 'user'}">My Orders</span>
-                    <span th:if="${#ctx.session.currentUser.role == 'admin'}">All Orders</span>
-                </a>
-                <span th:if="${#ctx.session.currentUser.role == 'admin'}"><a href=""><i class="fa fa-users"
-                                                                                        style="padding-right: 10px"></i>Customers</a></span>
+                <a href="/templates/frontpage.html" th:href="@{/frontpage}"><i class="fa fa-home" style="padding-right: 10px"></i>Home</a>
+                <span th:if="${#ctx.session.currentUser.role == 'user'}"><a href="/templates/customerorder.html" th:href="@{/customerorder}">
+                        <i class="fa fa-list-ul" style="padding-right: 10px"></i>My Orders</a>
+                    </span>
+                <span th:if="${#ctx.session.currentUser.role == 'admin'}"><a href="/templates/adminorder.html" th:href="@{/adminorder}">
+                        <i class="fa fa-list-ul" style="padding-right: 10px"></i>All Orders</a></span>
+                <span th:if="${#ctx.session.currentUser.role == 'admin'}"><a href="/templates/payuser.html" th:href="@{/payuser}">
+                    <i class="fa fa-users" style="padding-right: 10px"></i>Customers</a></span>
             </div>
             <div class="right-side">
                     <span th:if="${#ctx.session.currentUser.role == 'user'}">

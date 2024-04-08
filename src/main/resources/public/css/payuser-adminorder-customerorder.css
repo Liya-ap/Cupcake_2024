@@ -179,6 +179,23 @@ p {
     height: 90%;
 }
 
+#lblCartCount {
+    font-size: 20px;
+    background: #6096cc;
+    color: #fff;
+    padding: 0 5px;
+    vertical-align: top;
+    margin-left: -20px;
+}
+
+.badge {
+    padding-left: 9px;
+    padding-right: 9px;
+    -webkit-border-radius: 9px;
+    -moz-border-radius: 9px;
+    border-radius: 9px;
+}
+
 /*----------------------------------------- TABLE SPECIFIC ------------------------------------------------------------------*/
 
 /* Table */
