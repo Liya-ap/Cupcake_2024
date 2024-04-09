@@ -12,7 +12,7 @@ import java.util.List;
 
 public class UserMapper {
     public static User login(String email, String password, ConnectionPool connectionPool) throws DatabaseException {
-        String sql = "select * from users where email=? and password=?";
+        String sql = "SELECT * FROM users WHERE email=? AND password=?";
 
         try (
                 Connection connection = connectionPool.getConnection();
@@ -36,7 +36,7 @@ public class UserMapper {
     }
 
     public static void createuser(String email, String password, ConnectionPool connectionPool) throws DatabaseException {
-        String sql = "insert into users (email, password) values (?,?)";
+        String sql = "INSERT INTO users (email, password) VALUES (?,?)";
 
         try (
                 Connection connection = connectionPool.getConnection();
@@ -59,7 +59,7 @@ public class UserMapper {
     }
 
     public static void setUserBalance(int amount, int userId, ConnectionPool connectionPool) throws DatabaseException {
-        String sql = "update users set balance_dkk = ? + balance_dkk where user_id = ?";
+        String sql = "UPDATE users SET balance_dkk = ? + balance_dkk WHERE user_id = ?";
 
         try (
                 Connection connection = connectionPool.getConnection();
@@ -78,7 +78,7 @@ public class UserMapper {
 
     public static List<User> getAllUsers(ConnectionPool connectionPool) throws DatabaseException {
         List<User> userList = new ArrayList<>();
-        String sql = "select * from users ORDER BY email";
+        String sql = "SELECT * FROM users ORDER BY email";
 
         try (
                 Connection connection = connectionPool.getConnection();

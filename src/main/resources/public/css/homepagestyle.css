@@ -1,0 +1,140 @@
+form {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+/*----------------------------------------- SPECIFIC ------------------------------------------------------------------*/
+
+.outer-border {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    width: 90%;
+    height: 80%;
+    border: 10px solid rgba(0, 0, 0, .4);
+    border-radius: 5px;
+}
+
+.inner-border {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    width: 80%;
+    height: 80%;
+    border: 10px solid rgba(0, 0, 0, .4);
+    border-radius: 5px;
+    background-color: #CC6060;
+    font-weight: bold;
+    font-family: Calibri,sans-serif;
+}
+
+.option-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5em;
+    width: 100%;
+    height: 70%;
+}
+
+.option-single {
+    padding: 15px;
+    margin-bottom: 2px;
+}
+
+#topping, #bottom, #amount {
+    font-size: 1em;
+    padding: 5px;
+}
+
+.add-cupcake-container {
+    display: flex;
+    justify-content: right;
+    width: 100%;
+}
+
+.add-button {
+    width: 20%;
+    border: none;
+    color: white;
+    font-size: 1.5em;
+    background-color: #6096cc;
+    border-radius: 15px;
+    margin-right: 10%;
+    box-shadow: 0 6px 0 #1c3f62;
+}
+
+.add-button:hover {
+    background-color: #416791;
+    box-shadow: 0 2px 0 #1c3f62;
+}
+
+.fail {
+    color: #D8000C;
+    background-color: #FFBABA;
+    border: #D8000C solid 2px;
+}
+
+.success {
+    color: #3dbb3a;
+    background-color: #f2f5ef;
+    border: #3dbb3a solid 2px;
+}
+
+/*----------------------------------------- MEDIA ------------------------------------------------------------------*/
+/* If the screen size is 1150px wide or less*/
+@media screen and (max-width: 1250px) {
+    .add-button {
+        font-size: 1.2em;
+        height: 80%;
+        width: 32%;
+        margin-right: 5px;
+    }
+
+    .content-display-container {
+        height: 80%;
+    }
+
+    .option-container {
+        font-size: 1.5em;
+    }
+
+    .option-single {
+        padding: 5px;
+    }
+
+    #topping, #bottom, #amount {
+        font-size: 0.9em;
+        padding: 0;
+    }
+
+    .content-display-container {
+        width: 100%;
+    }
+}
+
+/*----------------------------------------- MEDIA ------------------------------------------------------------------*/
+/* If the screen size is 1150px wide or less*/
+@media screen and (max-width: 800px) {
+    #topping, #bottom, #amount {
+        font-size: 0.5em;
+        padding: 0;
+    }
+
+    .add-button {
+        font-size: 0.5em;
+        height: 80%;
+        width: 20%;
+        margin-right: 2px;
+    }
+
+}

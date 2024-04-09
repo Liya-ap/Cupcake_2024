@@ -2,6 +2,7 @@ package app.persistence;
 
 import app.entities.User;
 import app.exceptions.DatabaseException;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -13,7 +14,8 @@ public class BasketMapper {
 
     /**
      * Inserts the user's id into the order table and returns the created order_id
-     * @param user the user that made the order
+     *
+     * @param user           the user that made the order
      * @param connectionPool ConnectionPool used to execute sql for inserting user id and getting an order id
      * @return the created order id as int
      * @throws DatabaseException Displays "Failed at creating an order" + system msg
@@ -26,7 +28,7 @@ public class BasketMapper {
                 Connection connection = connectionPool.getConnection();
                 PreparedStatement ps = connection.prepareStatement(sql)
         ) {
-            ps.setInt(1, user.getUserId());
+            ps.setInt(1, user.getUserID());
 
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
@@ -35,15 +37,15 @@ public class BasketMapper {
         } catch (SQLException e) {
             throw new DatabaseException("Failed at creating an order", e.getMessage());
         }
-
         return orderID;
     }
 
     /**
      * Inserts the order id and cupcakedetail id into the orderline table
-     * @param orderID the order that should contain the orderline
+     *
+     * @param orderID         the order that should contain the orderline
      * @param cupcakeDetailID the cupcake id representing a cupcake
-     * @param connectionPool ConnectionPool used to execute sql for inserting order id and cupcakedetail id
+     * @param connectionPool  ConnectionPool used to execute sql for inserting order id and cupcakedetail id
      * @throws DatabaseException Displays "Failed at adding cupcake to basket" + system msg
      */
     public static void createOrderline(int orderID, int cupcakeDetailID, ConnectionPool connectionPool) throws DatabaseException {
@@ -59,12 +61,12 @@ public class BasketMapper {
         } catch (SQLException e) {
             throw new DatabaseException("Failed at adding cupcake to basket", e.getMessage());
         }
-
     }
 
     /**
      * Selects all the cupcake ids from a given user's basket
-     * @param user the user whose basket is viewed
+     *
+     * @param user           the user whose basket is viewed
      * @param connectionPool ConnectionPool used to execute sql for selecting cupcakedetail ids
      * @return list of integers containing the cupcakedetail ids from database
      * @throws DatabaseException Displays "Failed at getting cupcakes all cupcakes from basket" + system msg
@@ -77,7 +79,7 @@ public class BasketMapper {
                 Connection connection = connectionPool.getConnection();
                 PreparedStatement ps = connection.prepareStatement(sql)
         ) {
-            ps.setInt(1, user.getUserId());
+            ps.setInt(1, user.getUserID());
 
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
@@ -93,7 +95,8 @@ public class BasketMapper {
 
     /**
      * Removes all cupcakes from the given user's basket
-     * @param user the user whose basket is being deleted
+     *
+     * @param user           the user whose basket is being deleted
      * @param connectionPool ConnectionPool used to execute sql for deleting cupcakes from basket based on user id
      * @throws DatabaseException Displays "Failed at deleting cupcakes from basket" + system msg
      */
@@ -104,7 +107,7 @@ public class BasketMapper {
                 Connection connection = connectionPool.getConnection();
                 PreparedStatement ps = connection.prepareStatement(sql)
         ) {
-            ps.setInt(1, user.getUserId());
+            ps.setInt(1, user.getUserID());
             ps.executeUpdate();
         } catch (SQLException e) {
             throw new DatabaseException("Failed at deleting cupcakes from basket", e.getMessage());
