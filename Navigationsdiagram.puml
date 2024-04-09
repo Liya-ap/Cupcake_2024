@@ -1,0 +1,44 @@
+@startuml
+
+state login_page {
+ [*] --> login_page
+ login_page-->  [*]
+
+
+  state createuser_page{
+
+  createuser_page --> creatingUser : createUser()
+  creatingUser --> login_page : login()
+}
+  login_page --> home_page_Admin : login()
+  login_page --> home_page_Customer : login()
+}
+
+state home_page_Admin {
+
+  home_page_Admin --> allOrders_page : displayAllCustomerOrderHistories()
+ allOrders_page --> home_page_Admin : displayHome()
+
+  home_page_Admin --> userbalances_page : addUserBalance()
+  userbalances_page --> home_page_Admin : displayHome()
+
+    home_page_Admin --> logout_admin : logout()
+    logout_admin --> login_page
+}
+
+state home_page_Customer {
+
+
+  home_page_Customer --> basket : addCupcakesToBasket()
+
+  home_page_Customer --> myOrders_page : displayCurrentCustomersOrderHistory()
+  myOrders_page --> home_page_Customer : displayHome()
+
+   home_page_Customer --> basket_page : displayBasketPage()
+   basket_page --> buy : purchaseCupcake()
+    buy --> home_page_Customer : displayHome()
+
+  home_page_Customer --> logout_customer : logout()
+  logout_customer --> login_page
+}
+@enduml
