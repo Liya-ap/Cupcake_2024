@@ -7,11 +7,11 @@ object OrderLine
 object Basket
 object System
 
-Customer o-- Order
-Customer *-- Basket
-Order *-- OrderLine
-OrderLine *-- Cupcake
-Basket o-- OrderLine
-System *-- Administrator
-System o-- Customer
+Customer "1" o-- "0..*" Order
+Customer "1" *-- "1" Basket
+Order "1" *-- "1..*" OrderLine
+OrderLine "1" *-- "1" Cupcake
+Basket "1" o-- "0..*" OrderLine
+System "1" *-- "1" Administrator
+System "1" o-- "1..*" Customer
 @enduml

@@ -1,0 +1,47 @@
+@startuml
+|Customer|
+start
+fork
+    :Select Register;
+    detach
+fork again
+    :Select Login;
+end fork
+
+|#AntiqueWhite|System|
+:Display Login;
+
+|Database|
+:Validate Data;
+
+|System|
+:Display Homepage;
+
+|Customer|
+:Add Cupcake(s) To Basket;
+
+|Database|
+:Insert To Basket;
+
+|System|
+:Display Homepage;
+
+|Customer|
+:Select Basket;
+
+|System|
+:Display Basket page;
+
+|Customer|
+:Buy Cupcake(s);
+
+|Database|
+:Create Order;
+:Create Orderline(s);
+:Insert New User Balance;
+:Remove cupcake(s) from Basket;
+
+|System|
+:Display Basket page;
+stop
+@enduml
