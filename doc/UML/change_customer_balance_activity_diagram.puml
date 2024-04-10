@@ -1,0 +1,32 @@
+@startuml
+
+|Admin|
+start
+:Select Login;
+
+|#AntiqueWhite|System|
+:Display Login;
+
+|Database|
+:Validate Data;
+
+|System|
+:Display Homepage;
+
+|Admin|
+:Select Customers;
+
+|System|
+:Display Customers page;
+
+|Admin|
+:Change Customer(s) Balance;
+
+|Database|
+:Update Customer(s) Balance;
+
+|System|
+:Display Customers page;
+stop
+
+@enduml
